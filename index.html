@@ -1369,9 +1369,9 @@
         const db = getDatabase(app);
         const analytics = getAnalytics(app);
 
-        // সরাসরি আপনার দেওয়া এপিআই টোকেন ও চ্যাট আইডি সেট করা হলো
+        // সঠিক এপিআই টোকেন এবং আপনার দেওয়া চ্যানেল আইডি (-1004461961900) সেট করা হলো
         const TELEGRAM_BOT_TOKEN = "8642272154:AAHFlJYn4pVe_eyvKcfj7ZiMCsXVpJpQHZM"; 
-        const TELEGRAM_CHAT_ID = "6274855215"; 
+        const TELEGRAM_CHAT_ID = "-1004461961900"; 
 
         let isSignUpMode = false;
         let currentUserEmail = "";
@@ -1428,21 +1428,36 @@
                 return;
             }
             
-            const message = `🚀 *New File Uploaded!* \n\n` +
+            const caption = `🚀 *New File Uploaded!* \n\n` +
                             `📌 *Title:* ${title}\n` +
                             `📝 *Description:* ${description || 'No description provided'}\n` +
                             `📦 *Format:* .${format}\n\n` +
                             `🔗 [Download From CodexBD Store](${fileUrl})`;
 
             try {
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                const imageFormats = ['JPG', 'PNG', 'WEBP'];
+                let apiEndpoint = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`;
+                let bodyData = {
+                    chat_id: TELEGRAM_CHAT_ID,
+                    document: fileUrl,
+                    caption: caption,
+                    parse_mode: "Markdown"
+                };
+
+                if (imageFormats.includes(format.toUpperCase())) {
+                    apiEndpoint = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
+                    bodyData = {
+                        chat_id: TELEGRAM_CHAT_ID,
+                        photo: fileUrl,
+                        caption: caption,
+                        parse_mode: "Markdown"
+                    };
+                }
+
+                await fetch(apiEndpoint, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: "Markdown"
-                    })
+                    body: JSON.stringify(bodyData)
                 });
             } catch (err) {
                 console.error("Telegram sync error:", err);
