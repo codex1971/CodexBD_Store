@@ -1369,8 +1369,9 @@
         const db = getDatabase(app);
         const analytics = getAnalytics(app);
 
-        const TELEGRAM_BOT_TOKEN = "__TELEGRAM_BOT_TOKEN_PLACEHOLDER__"; 
-        const TELEGRAM_CHANNEL_USERNAME = "@codexbd47"; 
+        // সরাসরি আপনার দেওয়া এপিআই টোকেন ও চ্যাট আইডি সেট করা হলো
+        const TELEGRAM_BOT_TOKEN = "8642272154:AAHFlJYn4pVe_eyvKcfj7ZiMCsXVpJpQHZM"; 
+        const TELEGRAM_CHAT_ID = "6274855215"; 
 
         let isSignUpMode = false;
         let currentUserEmail = "";
@@ -1422,7 +1423,7 @@
         };
 
         async function sendToTelegramChannel(title, description, format, fileUrl) {
-            if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "8642272154:AAHFlJYn4pVe_eyvKcfj7ZiMCsXVpJpQHZM") {
+            if (!TELEGRAM_BOT_TOKEN) {
                 console.warn("Telegram Bot Token is not set properly.");
                 return;
             }
@@ -1438,7 +1439,7 @@
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        chat_id: TELEGRAM_CHANNEL_USERNAME,
+                        chat_id: TELEGRAM_CHAT_ID,
                         text: message,
                         parse_mode: "Markdown"
                     })
@@ -2165,7 +2166,7 @@
                     const titleEl = document.createElement('div');
                     titleEl.className = 'category-title';
                     titleEl.innerHTML = `<i class="fa-solid fa-folder-open"></i> .${format} FILES (${filesList.length})_`;
-                    sectionEl.appendChild(titleTitleEl = titleEl);
+                    sectionEl.appendChild(titleEl);
 
                     const scrollRow = document.createElement('div');
                     scrollRow.className = 'category-scroll-row';
