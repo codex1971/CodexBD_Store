@@ -1178,7 +1178,7 @@
         <div id="fileSectionsContainer"></div>
 
         <footer>
-            <p>&copy; 2026 CODEXBD STORE. Developed by <a href="#" onclick="openModal('contactModal')">Khokon Talukder</a>.</p>
+            <p>&copy; 2026 CODEXBD STORE. Developed by <a href="#" onclick="openModal('contactModal')">Khokon</a>.</p>
         </footer>
     </div>
 
@@ -1311,7 +1311,7 @@
             </div>
             <div style="padding: 10px 0;">
                 <i class="fa-solid fa-user-gear" style="font-size: 3rem; color: var(--accent-cyan); margin-bottom: 12px; filter: drop-shadow(0 0 10px var(--accent-cyan));"></i>
-                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon Talukder</h2>
+                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon</h2>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
                     <a href="https://www.facebook.com/Khokon.talukder.2026" target="_blank" class="btn-primary ripple-target" style="padding: 10px 18px;">
                         <i class="fa-brands fa-facebook"></i> Contact Developer
@@ -1335,12 +1335,12 @@
                 <span id="typingPolicyTarget"></span><span class="typing-cursor" id="typingCursor"></span>
             </div>
             <div class="telegram-btn-container" id="telegramBtnContainer">
-                <a href="https://t.me/codexbd47" target="_blank" class="telegram-channel-btn ripple-target">
+                <a href="https://t.me/d3v1lj0k3r" target="_blank" class="telegram-channel-btn ripple-target">
                     <div class="tg-btn-content">
                         <i class="fa-brands fa-telegram"></i>
-                        <span>CodexBD Official Channel</span>
+                        <span>CodexBD Telegram Bot</span>
                     </div>
-                    <span class="tg-btn-badge">JOIN</span>
+                    <span class="tg-btn-badge">CONNECT</span>
                 </a>
             </div>
         </div>
@@ -1369,9 +1369,9 @@
         const db = getDatabase(app);
         const analytics = getAnalytics(app);
 
-        // সঠিক এপিআই টোকেন এবং পাবলিক চ্যানেলের ইউজারনেম সেট করা হলো
+        // টেলিগ্রাম বট টোকেন এবং আপনার পার্সোনাল/বট চ্যাট আইডি (ডাইরেক্ট বটে পাঠানোর জন্য)
         const TELEGRAM_BOT_TOKEN = "8642272154:AAHFlJYn4pVe_eyvKcfj7ZiMCsXVpJpQHZM"; 
-        const TELEGRAM_CHAT_ID = "@codexbd47"; 
+        const TELEGRAM_BOT_CHAT_ID = "6274855215"; // আপনার নিজস্ব টেলিগ্রাম আইডি বা বট চ্যাট আইডি
 
         let isSignUpMode = false;
         let currentUserEmail = "";
@@ -1422,23 +1422,23 @@
             } catch(e) {}
         };
 
-        async function sendToTelegramChannel(title, description, format, fileUrl) {
+        async function sendToTelegramBot(title, description, format, fileUrl) {
             if (!TELEGRAM_BOT_TOKEN) {
                 console.warn("Telegram Bot Token is not set properly.");
                 return;
             }
             
-            const caption = `🚀 *New File Uploaded!* \n\n` +
+            const caption = `🚀 *New File Saved via CodexBD Store!* \n\n` +
                             `📌 *Title:* ${title}\n` +
                             `📝 *Description:* ${description || 'No description provided'}\n` +
                             `📦 *Format:* .${format}\n\n` +
-                            `🔗 [Download From CodexBD Store](${fileUrl})`;
+                            `🔗 [Download File](${fileUrl})`;
 
             try {
                 const imageFormats = ['JPG', 'PNG', 'WEBP'];
                 let apiEndpoint = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`;
                 let bodyData = {
-                    chat_id: TELEGRAM_CHAT_ID,
+                    chat_id: TELEGRAM_BOT_CHAT_ID,
                     document: fileUrl,
                     caption: caption,
                     parse_mode: "Markdown"
@@ -1447,7 +1447,7 @@
                 if (imageFormats.includes(format.toUpperCase())) {
                     apiEndpoint = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
                     bodyData = {
-                        chat_id: TELEGRAM_CHAT_ID,
+                        chat_id: TELEGRAM_BOT_CHAT_ID,
                         photo: fileUrl,
                         caption: caption,
                         parse_mode: "Markdown"
@@ -1460,7 +1460,7 @@
                     body: JSON.stringify(bodyData)
                 });
             } catch (err) {
-                console.error("Telegram sync error:", err);
+                console.error("Telegram bot sync error:", err);
             }
         }
 
@@ -1770,8 +1770,8 @@
                     likedUsers: {},
                     comments: []
                 }).then(() => {
-                    showToast("File uploaded to Firebase successfully!");
-                    sendToTelegramChannel(title, description, formatExt, fileUrl);
+                    showToast("File uploaded to Firebase & Bot successfully!");
+                    sendToTelegramBot(title, description, formatExt, fileUrl);
                     closeModal('uploadModal');
                     document.getElementById('uploadForm').reset();
                 }).catch((err) => {
@@ -2266,4 +2266,4 @@
         window.filterFiles = function() { renderFiles(); }
     </script>
 </body>
-</html>
+    </html>
