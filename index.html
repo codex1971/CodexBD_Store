@@ -71,35 +71,98 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        #loading-spinner-box {
+        /* ----- Facebook-style Cyber Skeleton Loader ----- */
+        .skeleton-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 290px));
+            justify-content: center;
+            gap: 25px;
+            width: 100%;
+            padding: 10px 0 30px 0;
+        }
+
+        .skeleton-card {
+            width: 280px;
+            height: 350px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 70px 0;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .shimmer-line {
+            position: relative;
+            background: rgba(0, 243, 255, 0.06);
+            overflow: hidden;
+        }
+
+        .shimmer-line::after {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0) 0,
+                rgba(0, 243, 255, 0.15) 20%,
+                rgba(0, 243, 255, 0.3) 60%,
+                rgba(255, 255, 255, 0)
+            );
+            animation: shimmer 1.5s infinite;
+            content: '';
+        }
+
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+
+        .skeleton-preview {
             width: 100%;
-            grid-column: 1 / -1;
+            height: 145px;
+            border-bottom: 1px solid var(--glass-border);
         }
-        .cyber-spinner {
-            width: 45px;
-            height: 45px;
-            border: 3px solid rgba(0, 243, 255, 0.1);
-            border-top: 3px solid var(--accent-cyan);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
-            margin-bottom: 12px;
+
+        .skeleton-body {
+            padding: 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .skeleton-title {
+            height: 18px;
+            width: 80%;
+            border-radius: 4px;
         }
-        .loading-text {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--accent-cyan);
-            font-size: 0.95rem;
-            letter-spacing: 2px;
-            text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+
+        .skeleton-meta {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .skeleton-meta-item {
+            height: 12px;
+            width: 35%;
+            border-radius: 3px;
+        }
+
+        .skeleton-actions {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .skeleton-btn {
+            height: 26px;
+            width: 70px;
+            border-radius: 4px;
         }
 
         .ripple-target {
@@ -1259,9 +1322,50 @@
         </div>
 
         <div id="fileSectionsContainer">
-            <div id="loading-spinner-box">
-                <div class="cyber-spinner"></div>
-                <div class="loading-text">Connecting</div>
+            <!-- ফেসবুক স্টাইলের শিমার Skeleton Loader -->
+            <div class="skeleton-wrapper">
+                <div class="skeleton-card">
+                    <div class="skeleton-preview shimmer-line"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-title shimmer-line"></div>
+                        <div class="skeleton-meta">
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                        </div>
+                        <div class="skeleton-actions">
+                            <div class="skeleton-btn shimmer-line"></div>
+                            <div class="skeleton-btn shimmer-line"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-preview shimmer-line"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-title shimmer-line"></div>
+                        <div class="skeleton-meta">
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                        </div>
+                        <div class="skeleton-actions">
+                            <div class="skeleton-btn shimmer-line"></div>
+                            <div class="skeleton-btn shimmer-line"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-preview shimmer-line"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-title shimmer-line"></div>
+                        <div class="skeleton-meta">
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                        </div>
+                        <div class="skeleton-actions">
+                            <div class="skeleton-btn shimmer-line"></div>
+                            <div class="skeleton-btn shimmer-line"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1399,7 +1503,7 @@
             </div>
             <div style="padding: 10px 0;">
                 <i class="fa-solid fa-user-gear" style="font-size: 3rem; color: var(--accent-cyan); margin-bottom: 12px; filter: drop-shadow(0 0 10px var(--accent-cyan));"></i>
-                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon Talukdar</h2>
+                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon</h2>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
                     <a href="https://www.facebook.com/Khokon.talukder.2026" target="_blank" class="btn-primary ripple-target" style="padding: 10px 18px;">
                         <i class="fa-brands fa-facebook"></i> Contact Developer
@@ -1755,7 +1859,7 @@
                 }
                 window.filesData.reverse();
                 
-                // ডেটা আসা মাত্রই দ্রুত (৩-৪ সেকেন্ডের মধ্যে বা ইনস্ট্যান্ট) রেন্ডার করার ব্যবস্থা
+                // ফায়ারবেজ থেকে ডেটা লোড হওয়া মাত্রই সাথে সাথে কার্ডগুলো শো করবে (কোনো সময় নষ্ট হবে না)
                 if (typeof window.renderFiles === 'function') {
                     window.renderFiles();
                 }
@@ -1895,19 +1999,19 @@
             });
         }
 
-        // সিঙ্গেল কার্ড ফ্লিপ লজিক: একটি কার্ড ঘুরলে অন্যটি অটোমেটিক সোজা হয়ে যাবে
+        // সিঙ্গেল কার্ড ফ্লিপ লজিক + টাইপিং অ্যানিমেশন
         window.toggleCardFlip = function(cardWrapper) {
             playCyberSound();
             const isFlipped = cardWrapper.classList.contains('flipped');
             
-            // সব কার্ড থেকে ফ্লিড ক্লাস সরিয়ে দেওয়া (সব সোজা করা)
+            // পূর্বের যেকোনো উল্টানো কার্ড সোজা করে দেওয়া
             document.querySelectorAll('.file-card-wrapper').forEach(el => {
                 el.classList.remove('flipped');
                 const descEl = el.querySelector('.back-desc');
                 if(descEl && descEl.typingInterval) clearInterval(descEl.typingInterval);
             });
 
-            // যদি আগেরটি ফ্লিফড না থাকে, তবে বর্তমানটি ফ্লিপ করো এবং টাইপিং অ্যানিমেশন চালাও
+            // বর্তমান কার্ডটি উল্টানো না থাকলে ফ্লিপ করে টাইপিং অ্যানিমেশন দেখানো
             if (!isFlipped) {
                 cardWrapper.classList.add('flipped');
                 const descEl = cardWrapper.querySelector('.back-desc');
@@ -1958,7 +2062,7 @@
                 currentUserId = user.uid;
                 window.currentUserEmailGlobal = user.email;
 
-                const savedName = localStorage.getItem('codexbd_user_name_' + currentUserEmail) || "Khokon Talukdar";
+                const savedName = localStorage.getItem('codexbd_user_name_' + currentUserEmail) || "Khokon";
                 const savedUsername = localStorage.getItem('codexbd_user_username_' + currentUserEmail) || currentUserEmail.split('@')[0];
                 const savedDob = localStorage.getItem('codexbd_user_dob_' + currentUserEmail) || "2000-08-23";
                 const savedGender = localStorage.getItem('codexbd_user_gender_' + currentUserEmail) || "Male";
@@ -2163,20 +2267,61 @@
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             if (!container) return;
             
+            // ফায়ারবেজের ডেটা লোড না হওয়া পর্যন্ত ফেসবুকের মতো শিমার স্কেলেটন দেখাবে
+            if (!window.filesData || window.filesData.length === 0) {
+                container.innerHTML = `
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton-card">
+                            <div class="skeleton-preview shimmer-line"></div>
+                            <div class="skeleton-body">
+                                <div class="skeleton-title shimmer-line"></div>
+                                <div class="skeleton-meta">
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                </div>
+                                <div class="skeleton-actions">
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skeleton-card">
+                            <div class="skeleton-preview shimmer-line"></div>
+                            <div class="skeleton-body">
+                                <div class="skeleton-title shimmer-line"></div>
+                                <div class="skeleton-meta">
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                </div>
+                                <div class="skeleton-actions">
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skeleton-card">
+                            <div class="skeleton-preview shimmer-line"></div>
+                            <div class="skeleton-body">
+                                <div class="skeleton-title shimmer-line"></div>
+                                <div class="skeleton-meta">
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                </div>
+                                <div class="skeleton-actions">
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                return;
+            }
+
             const filteredFiles = (window.filesData || []).filter(file => {
                 const matchesFormat = (currentFormatFilter === 'all') || (file.format && file.format.toUpperCase() === currentFormatFilter.toUpperCase());
                 const matchesSearch = file.title && file.title.toLowerCase().includes(searchQuery);
                 return matchesFormat && matchesSearch;
             });
-
-            if (!window.filesData || window.filesData.length === 0) {
-                container.innerHTML = `
-                    <div id="loading-spinner-box">
-                        <div class="cyber-spinner"></div>
-                        <div class="loading-text">Connecting</div>
-                    </div>`;
-                return;
-            }
 
             container.innerHTML = '';
 
