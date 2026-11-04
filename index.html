@@ -1047,21 +1047,6 @@
         }
         @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        .telegram-btn-container { margin-top: 12px; display: none; }
-        .telegram-channel-btn {
-            background: linear-gradient(135deg, rgba(0, 136, 204, 0.2), rgba(0, 172, 238, 0.4));
-            border: 1px solid #00aced;
-            color: #fff; font-weight: 700;
-            padding: 10px 16px;
-            display: flex; align-items: center; justify-content: space-between;
-            font-size: 0.85rem; text-decoration: none; width: 100%;
-        }
-        .tg-btn-badge {
-            font-size: 0.72rem; background: rgba(0, 172, 238, 0.2);
-            border: 1px solid #00aced; padding: 2px 6px;
-            font-family: 'Share Tech Mono', monospace; color: #00aced;
-        }
-
         footer {
             text-align: center; padding: 15px 0;
             border-top: 1px solid var(--glass-border);
@@ -1238,7 +1223,7 @@
         <div id="fileSectionsContainer"></div>
 
         <footer>
-            <p>&copy; 2026 CODEXBD STORE. Developed by <a href="#" onclick="openModal('contactModal')">Khokon</a>.</p>
+            <p>&copy; 2026 CODEXBD STORE. Developed by <a href="#" onclick="openModal('contactModal')">Khokon Talukdar</a>.</p>
         </footer>
     </div>
 
@@ -1371,7 +1356,7 @@
             </div>
             <div style="padding: 10px 0;">
                 <i class="fa-solid fa-user-gear" style="font-size: 3rem; color: var(--accent-cyan); margin-bottom: 12px; filter: drop-shadow(0 0 10px var(--accent-cyan));"></i>
-                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon</h2>
+                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon Talukdar</h2>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
                     <a href="https://www.facebook.com/Khokon.talukder.2026" target="_blank" class="btn-primary ripple-target" style="padding: 10px 18px;">
                         <i class="fa-brands fa-facebook"></i> Contact Developer
@@ -1394,19 +1379,10 @@
             <div class="policy-text-box" id="policyScrollContainer">
                 <span id="typingPolicyTarget"></span><span class="typing-cursor" id="typingCursor"></span>
             </div>
-            <div class="telegram-btn-container" id="telegramBtnContainer">
-                <a href="https://t.me/d3v1lj0k3r" target="_blank" class="telegram-channel-btn ripple-target">
-                    <div class="tg-btn-content">
-                        <i class="fa-brands fa-telegram"></i>
-                        <span>CodexBD Telegram Bot</span>
-                    </div>
-                    <span class="tg-btn-badge">CONNECT</span>
-                </a>
-            </div>
         </div>
     </div>
 
-    <!-- ফায়ারবেজ এবং টেলিগ্রাম অটোমেশন মডিউল -->
+    <!-- ফায়ারবেজ মডিউল -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
@@ -1429,9 +1405,6 @@
         const db = getDatabase(app);
         const analytics = getAnalytics(app);
 
-        const TELEGRAM_BOT_TOKEN = "8642272154:AAHFlJYn4pVe_eyvKcfj7ZiMCsXVpJpQHZM"; 
-        const TELEGRAM_CHAT_ID = "6274855215";
-
         let isSignUpMode = false;
         let currentUserEmail = "";
         let currentUserId = "";
@@ -1441,7 +1414,6 @@
         let recoveryTargetEmail = "";
         window.filesData = [];
         window.tempSelectedFileUrl = "#";
-        window.rawSelectedFileObject = null;
 
         const defaultAvatarSvg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f3ff'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>";
 
@@ -1481,52 +1453,6 @@
                 }
             } catch(e) {}
         };
-
-        async function sendFileDirectlyToTelegramBot(title, description, format, fileObj) {
-            if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-                console.warn("Telegram Bot Token or Chat ID is missing.");
-                return;
-            }
-
-            const caption = `🚀 *New File Uploaded to CodexBD Store!* \n\n` +
-                            `📌 *App Title:* ${title}\n` +
-                            `📝 *Description:* ${description || 'No description provided'}\n` +
-                            `📦 *File Format:* .${format}\n` +
-                            `👤 *Uploader:* ${currentUserEmail || 'Anonymous'}`;
-
-            try {
-                const imageFormats = ['JPG', 'PNG', 'WEBP'];
-                let apiEndpoint = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`;
-                let fileFieldKey = 'document';
-
-                if (imageFormats.includes(format.toUpperCase())) {
-                    apiEndpoint = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
-                    fileFieldKey = 'photo';
-                }
-
-                const formData = new FormData();
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append(fileFieldKey, fileObj, fileObj.name || (`file.${format.toLowerCase()}`));
-                formData.append('caption', caption);
-                formData.append('parse_mode', 'Markdown');
-
-                const response = await fetch(apiEndpoint, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-                if (result.ok) {
-                    showToast("File & details successfully sent to Telegram Bot!");
-                } else {
-                    console.error("Telegram API Error:", result.description);
-                    showToast("Bot Error: " + result.description);
-                }
-            } catch (err) {
-                console.error("Telegram bot sync exception:", err);
-                showToast("Telegram sync failed. Check console.");
-            }
-        }
 
         window.togglePasswordVisibility = function() {
             const passwordInput = document.getElementById('authPassword');
@@ -1802,7 +1728,7 @@
             const formatExt = (document.getElementById('fileFormatExt').value || 'SW').toUpperCase();
 
             closeModal('uploadModal');
-            showToast("Uploading & syncing to Telegram Bot...");
+            showToast("Processing upload...");
 
             if (editKey) {
                 const postRef = ref(db, editKey);
@@ -1836,12 +1762,7 @@
                     likedUsers: {},
                     comments: []
                 }).then(() => {
-                    showToast("File saved & dispatched to Telegram Bot!");
-                    
-                    if (window.rawSelectedFileObject) {
-                        sendFileDirectlyToTelegramBot(title, description, formatExt, window.rawSelectedFileObject);
-                    }
-
+                    showToast("File uploaded & saved successfully!");
                     document.getElementById('uploadForm').reset();
                 }).catch((err) => {
                     showToast("Upload failed: " + err.message);
@@ -1875,7 +1796,6 @@
             document.getElementById('fileNameDisplay').innerText = "Click to browse file";
             document.getElementById('scanStatusBadge').style.display = 'none';
             window.tempSelectedFileUrl = "#";
-            window.rawSelectedFileObject = null;
             openModal('uploadModal');
         }
 
@@ -2108,11 +2028,9 @@
             const target = document.getElementById('typingPolicyTarget');
             const cursor = document.getElementById('typingCursor');
             const scrollBox = document.getElementById('policyScrollContainer');
-            const telegramBtnContainer = document.getElementById('telegramBtnContainer');
             
             target.innerHTML = '';
             cursor.style.display = 'inline-block';
-            telegramBtnContainer.style.display = 'none';
             
             const policyText = "[INFO]: CODEXBD COMPREHENSIVE STORE POLICY & GUIDELINES\n\n1. Free Platform & Access: CodexBD Store provides a secure cloud repository for uploading, sharing, and managing personal digital assets completely free of charge.\n\n2. Enterprise-Grade Security: All user credentials and data transmissions are secured using advanced quantum-resistant protocols and cryptographic encryption standards.\n\n3. Automated Threat Detection & Safety: Every uploaded file undergoes rigorous real-time malware analysis. Executable files and dangerous scripts are automatically restricted to maintain absolute platform integrity.\n\n4. User Conduct & Responsibility: Users must ensure that uploaded content adheres to intellectual property guidelines and does not distribute malicious software.";
             
@@ -2125,7 +2043,6 @@
                     setTimeout(typeWriter, 12);
                 } else {
                     cursor.style.display = 'none';
-                    telegramBtnContainer.style.display = 'block';
                     scrollBox.scrollTop = scrollBox.scrollHeight;
                 }
             }
@@ -2154,8 +2071,6 @@
                 window.isFileSafeToUpload = true;
                 badge.className = 'scan-status-badge safe'; badge.innerText = 'SCAN PASSED: Safe';
                 
-                window.rawSelectedFileObject = file;
-
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     window.tempSelectedFileUrl = e.target.result;
