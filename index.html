@@ -71,7 +71,7 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* ফেসবুক স্টাইলের শিমার Skeleton Loader (বড় সাইজ) */
+        /* Skeleton Loader (বড় সাইজ ও দ্রুত লোডিং) */
         .skeleton-wrapper {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(310px, 330px));
@@ -743,7 +743,7 @@
             box-shadow: 0 0 10px var(--accent-cyan);
         }
 
-        /* কার্ডের সাইজ বড় করা হয়েছে (Width: 320px, Height: 390px) */
+        /* কার্ড সাইজ (Width: 320px, Height: 390px) */
         .file-card-wrapper {
             width: 320px;
             height: 390px;
@@ -821,6 +821,68 @@
             border-bottom: 1px solid var(--border-glow);
         }
 
+        /* কার্ডের কোণায় থ্রি-ডট মেনু বাটন */
+        .card-menu-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--glass-border);
+            color: var(--accent-cyan);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s;
+        }
+        .card-menu-btn:hover {
+            background: rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* ড্রপডাউন পপআপ মেনু */
+        .card-dropdown-menu {
+            position: absolute;
+            top: 48px;
+            right: 10px;
+            background: #060c1c;
+            border: 1px solid var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+            border-radius: 6px;
+            width: 140px;
+            z-index: 20;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .card-dropdown-menu.open {
+            display: flex;
+        }
+        .dropdown-item {
+            padding: 10px 12px;
+            color: var(--text-primary);
+            font-size: 0.82rem;
+            font-family: 'Share Tech Mono', monospace;
+            background: transparent;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+        .dropdown-item:hover {
+            background: rgba(0, 243, 255, 0.15);
+            color: var(--accent-cyan);
+        }
+
         .file-icon-large { font-size: 3.2rem; color: var(--accent-cyan); filter: drop-shadow(0 0 10px var(--accent-cyan)); }
 
         .file-details {
@@ -841,7 +903,7 @@
         }
 
         .file-meta {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             display: flex;
             justify-content: space-between;
@@ -886,23 +948,6 @@
             align-items: center;
             gap: 4px;
             font-weight: 700;
-        }
-
-        .edit-group {
-            display: flex;
-            gap: 5px;
-            width: 100%;
-            justify-content: flex-end;
-            margin-top: 6px;
-        }
-        .edit-post-btn {
-            background: rgba(255, 170, 0, 0.15);
-            color: #ffaa00;
-            border: 1px solid #ffaa00;
-            padding: 4px 10px;
-            font-size: 0.78rem;
-            cursor: pointer;
-            font-weight: bold;
         }
 
         .comments-section {
@@ -1323,7 +1368,7 @@
         </div>
 
         <div id="fileSectionsContainer">
-            <!-- শিমার Skeleton Loader (ইনস্ট্যান্ট লোডিংয়ের জন্য) -->
+            <!-- শিমার Skeleton Loader -->
             <div class="skeleton-wrapper">
                 <div class="skeleton-card">
                     <div class="skeleton-preview shimmer-line"></div>
@@ -1466,6 +1511,7 @@
                 </div>
                 <input type="hidden" id="fileCategory" value="code">
                 <input type="hidden" id="fileFormatExt" value="SW">
+                <input type="hidden" id="fileSizeVal" value="2.4 MB">
 
                 <div class="drop-zone ripple-target" id="dropZoneElement" onclick="document.getElementById('fileInput').click()">
                     <i class="fa-solid fa-file-circle-plus" id="dropZoneIcon"></i>
@@ -1481,7 +1527,7 @@
         </div>
     </div>
 
-    <!-- ডেভলপার ইনফো মডাল (নাম ঠিক করে খোকন তালুকদার করা হয়েছে) -->
+    <!-- ডেভলপার ইনফো মডাল -->
     <div class="modal-overlay" id="contactModal" onclick="preventOutsideClose(event)">
         <div class="modal-card" style="text-align: center;">
             <div class="modal-header">
@@ -1548,6 +1594,7 @@
         let recoveryTargetEmail = "";
         window.filesData = [];
         window.tempSelectedFileUrl = "#";
+        window.tempFileSizeStr = "2.4 MB";
 
         const defaultAvatarSvg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f3ff'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>";
 
@@ -1846,7 +1893,6 @@
                 }
                 window.filesData.reverse();
                 
-                // ডেটা আসার সাথে সাথে ইনস্ট্যান্ট রেন্ডার হবে, কোনো ডিলে রাখা হয়নি
                 if (typeof window.renderFiles === 'function') {
                     window.renderFiles();
                 }
@@ -1863,6 +1909,7 @@
             const description = document.getElementById('fileDescInput').value;
             const category = document.getElementById('fileCategory').value;
             const formatExt = (document.getElementById('fileFormatExt').value || 'SW').toUpperCase();
+            const fileSize = document.getElementById('fileSizeVal').value || '2.4 MB';
 
             closeModal('uploadModal');
             showToast("Uploading directly to vault...");
@@ -1891,7 +1938,7 @@
                     description: description,
                     category: category,
                     format: formatExt,
-                    fileSize: '2.4 MB',
+                    fileSize: fileSize,
                     uploadDate: new Date().toISOString().split('T')[0],
                     fileUrl: fileUrl,
                     uploaderEmail: currentUserEmail,
@@ -1933,6 +1980,7 @@
             document.getElementById('fileNameDisplay').innerText = "Click to browse file";
             document.getElementById('scanStatusBadge').style.display = 'none';
             window.tempSelectedFileUrl = "#";
+            window.tempFileSizeStr = "2.4 MB";
             openModal('uploadModal');
         }
 
@@ -1986,7 +2034,43 @@
             });
         }
 
-        // সিঙ্গেল কার্ড ফ্লিপ লজিক + টাইপিং অ্যানিমেশন
+        // থ্রি-ডট মেনু টগল করার ফাংশন
+        window.toggleCardMenu = function(id, event) {
+            event.stopPropagation();
+            playCyberSound();
+            
+            // অন্যান্য ওপেন থাকা মেনু বন্ধ করা
+            document.querySelectorAll('.card-dropdown-menu').forEach(el => {
+                if (el.id !== `card-menu-${id}`) el.classList.remove('open');
+            });
+
+            const menu = document.getElementById(`card-menu-${id}`);
+            if (menu) {
+                menu.classList.toggle('open');
+            }
+        }
+
+        // যেকোনো জায়গায় ক্লিক করলে মেনু ক্লোজ হয়ে যাবে
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.card-dropdown-menu').forEach(el => el.classList.remove('open'));
+        });
+
+        // শেয়ার ফাংশন
+        window.sharePost = function(title, fileUrl, event) {
+            event.stopPropagation();
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: `Check out ${title} on CodexBD Store!`,
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Link copied to clipboard!");
+            }
+        }
+
+        // কার্ড ফ্লিপ লজিক
         window.toggleCardFlip = function(cardWrapper) {
             playCyberSound();
             const isFlipped = cardWrapper.classList.contains('flipped');
@@ -2228,6 +2312,13 @@
             const badge = document.getElementById('scanStatusBadge');
             const submitBtn = document.getElementById('uploadSubmitBtn');
 
+            // ফাইলের সাইজ হিসাব করা (MB বা KB)
+            let calculatedSize = (file.size / (1024 * 1024)).toFixed(1) + " MB";
+            if (file.size < 1024 * 1024) {
+                calculatedSize = (file.size / 1024).toFixed(1) + " KB";
+            }
+            document.getElementById('fileSizeVal').value = calculatedSize;
+
             const BLOCKED_EXTENSIONS = ['exe', 'bat', 'vbs', 'cmd', 'msi', 'scr', 'ps1', 'jar'];
             if (BLOCKED_EXTENSIONS.includes(ext)) {
                 window.isFileSafeToUpload = false;
@@ -2335,12 +2426,12 @@
                     const isLikedByMe = file.likedUsers && file.likedUsers[safeUserKey];
                     const likeCount = file.likes || 0;
 
-                    let editHtml = '';
+                    let editDropdownItem = '';
                     if (activeUser && file.uploaderEmail === activeUser) {
-                        editHtml = `
-                            <div class="edit-group">
-                                <button class="edit-post-btn ripple-target" onclick="openEditModal('${file.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
-                            </div>
+                        editDropdownItem = `
+                            <button class="dropdown-item" onclick="openEditModal('${file.id}')">
+                                <i class="fa-solid fa-pen"></i> Edit
+                            </button>
                         `;
                     }
 
@@ -2349,11 +2440,27 @@
                             <div class="file-card-front">
                                 <div class="file-preview">
                                     <i class="fa-solid ${iconClass} file-icon-large"></i>
+                                    
+                                    <!-- থ্রি-ডট মেনু বাটন (উপরের কোণায়) -->
+                                    <button class="card-menu-btn ripple-target" onclick="toggleCardMenu('${file.id}', event)">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+
+                                    <!-- ড্রপডাউন পপআপ মেনু -->
+                                    <div class="card-dropdown-menu" id="card-menu-${file.id}">
+                                        ${editDropdownItem}
+                                        <button class="dropdown-item" onclick="sharePost('${file.title}', '${file.fileUrl}', event)">
+                                            <i class="fa-solid fa-share-nodes"></i> Share
+                                        </button>
+                                        <a href="${file.fileUrl}" download="${file.title}.${(file.format || '').toLowerCase()}" class="dropdown-item">
+                                            <i class="fa-solid fa-download"></i> Download
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="file-details">
                                     <div class="file-title">${file.title}</div>
                                     <div class="file-meta">
-                                        <span style="color: var(--accent-cyan); font-weight: bold;">.${file.format}</span>
+                                        <span style="color: var(--accent-cyan); font-weight: bold;">.${file.format} (${file.fileSize || '2.4 MB'})</span>
                                         <span>${file.uploadDate}</span>
                                     </div>
                                     <div class="file-actions">
@@ -2364,7 +2471,6 @@
                                             <i class="fa-solid fa-download"></i> Download
                                         </a>
                                     </div>
-                                    ${editHtml}
                                     <div class="comments-section">
                                         <button class="comment-toggle-btn ripple-target" onclick="toggleComments('${file.id}')">
                                             <i class="fa-solid fa-comments"></i> Comment (${(file.comments || []).length})
@@ -2438,12 +2544,12 @@
                         const isLikedByMe = file.likedUsers && file.likedUsers[safeUserKey];
                         const likeCount = file.likes || 0;
 
-                        let editHtml = '';
+                        let editDropdownItem = '';
                         if (activeUser && file.uploaderEmail === activeUser) {
-                            editHtml = `
-                                <div class="edit-group">
-                                    <button class="edit-post-btn ripple-target" onclick="openEditModal('${file.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
-                                </div>
+                            editDropdownItem = `
+                                <button class="dropdown-item" onclick="openEditModal('${file.id}')">
+                                    <i class="fa-solid fa-pen"></i> Edit
+                                </button>
                             `;
                         }
 
@@ -2452,11 +2558,27 @@
                                 <div class="file-card-front">
                                     <div class="file-preview">
                                         <i class="fa-solid ${iconClass} file-icon-large"></i>
+                                        
+                                        <!-- থ্রি-ডট মেনু বাটন (উপরের কোণায়) -->
+                                        <button class="card-menu-btn ripple-target" onclick="toggleCardMenu('${file.id}', event)">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+
+                                        <!-- ড্রপডাউন পপআপ মেনু -->
+                                        <div class="card-dropdown-menu" id="card-menu-${file.id}">
+                                            ${editDropdownItem}
+                                            <button class="dropdown-item" onclick="sharePost('${file.title}', '${file.fileUrl}', event)">
+                                                <i class="fa-solid fa-share-nodes"></i> Share
+                                            </button>
+                                            <a href="${file.fileUrl}" download="${file.title}.${(file.format || '').toLowerCase()}" class="dropdown-item">
+                                                <i class="fa-solid fa-download"></i> Download
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="file-details">
                                         <div class="file-title">${file.title}</div>
                                         <div class="file-meta">
-                                            <span style="color: var(--accent-cyan); font-weight: bold;">.${file.format}</span>
+                                            <span style="color: var(--accent-cyan); font-weight: bold;">.${file.format} (${file.fileSize || '2.4 MB'})</span>
                                             <span>${file.uploadDate}</span>
                                         </div>
                                         <div class="file-actions">
@@ -2467,7 +2589,6 @@
                                                 <i class="fa-solid fa-download"></i> Download
                                             </a>
                                         </div>
-                                        ${editHtml}
                                         <div class="comments-section">
                                             <button class="comment-toggle-btn ripple-target" onclick="toggleComments('${file.id}')">
                                                 <i class="fa-solid fa-comments"></i> Comment (${(file.comments || []).length})
@@ -2517,4 +2638,4 @@
         window.filterFiles = function() { renderFiles(); }
     </script>
 </body>
-    </html>
+</html>
