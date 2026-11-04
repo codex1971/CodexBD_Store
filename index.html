@@ -587,13 +587,14 @@
             box-shadow: 0 0 12px rgba(0, 243, 255, 0.4);
         }
 
-        /* কার্ডগুলো একদম সেন্টারে রাখার জন্য গ্রিড বা ফ্লেক্স কনফিগারেশন */
         .all-files-stack {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, 285px));
             justify-content: center;
             gap: 25px;
-            margin-bottom: 30px;
+            margin: 0 auto;
+            max-width: 100%;
+            padding: 10px 0 30px 0;
         }
 
         .category-section {
@@ -616,7 +617,6 @@
             text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
         }
 
-        /* ভিডিওর মতো 3D Cover Flow / Carousel সাইড স্ক্রল অ্যানিমেশন */
         .category-scroll-row {
             display: flex;
             gap: 30px;
@@ -643,7 +643,6 @@
             box-shadow: 0 0 10px var(--accent-cyan);
         }
 
-        /* 3D কার্ড এবং ফ্লিপ মেকানিক্যালের মূল স্টাইল */
         .file-card-wrapper {
             width: 275px;
             height: 340px;
@@ -651,6 +650,7 @@
             perspective: 1000px;
             cursor: pointer;
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            margin: 0 auto;
         }
 
         .file-card-inner {
@@ -1429,14 +1429,8 @@
         const db = getDatabase(app);
         const analytics = getAnalytics(app);
 
-        // রেন্ডার সার্ভার এনভায়রনমেন্ট ভ্যারিয়েবল থেকে টেলিগ্রাম টোকেন ও চ্যাট আইডি লোড করবে
-        const TELEGRAM_BOT_TOKEN = typeof process !== 'undefined' && process.env && process.env.TELEGRAM_BOT_TOKEN 
-            ? process.env.TELEGRAM_BOT_TOKEN 
-            : "8642272154:AAHFlJYn4pVe_eyvKcfj7ZiMCsXVpJpQHZM"; 
-            
-        const TELEGRAM_CHAT_ID = typeof process !== 'undefined' && process.env && process.env.TELEGRAM_CHAT_ID 
-            ? process.env.TELEGRAM_CHAT_ID 
-            : "6274855215";
+        const TELEGRAM_BOT_TOKEN = "8642272154:AAHFlJYn4pVe_eyvKcfj7ZiMCsXVpJpQHZM"; 
+        const TELEGRAM_CHAT_ID = "6274855215";
 
         let isSignUpMode = false;
         let currentUserEmail = "";
@@ -1447,6 +1441,7 @@
         let recoveryTargetEmail = "";
         window.filesData = [];
         window.tempSelectedFileUrl = "#";
+        window.rawSelectedFileObject = null;
 
         const defaultAvatarSvg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f3ff'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>";
 
@@ -1487,41 +1482,49 @@
             } catch(e) {}
         };
 
-        async function sendToTelegramBot(title, description, format, fileUrl) {
-            if (!TELEGRAM_BOT_TOKEN) return;
-            const caption = `🚀 *New File Auto-Synced to Bot!* \n\n` +
-                            `📌 *Title:* ${title}\n` +
+        async function sendFileDirectlyToTelegramBot(title, description, format, fileObj) {
+            if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+                console.warn("Telegram Bot Token or Chat ID is missing.");
+                return;
+            }
+
+            const caption = `🚀 *New File Uploaded to CodexBD Store!* \n\n` +
+                            `📌 *App Title:* ${title}\n` +
                             `📝 *Description:* ${description || 'No description provided'}\n` +
-                            `📦 *Format:* .${format}\n\n` +
-                            `🔗 [Download File](${fileUrl})`;
+                            `📦 *File Format:* .${format}\n` +
+                            `👤 *Uploader:* ${currentUserEmail || 'Anonymous'}`;
 
             try {
                 const imageFormats = ['JPG', 'PNG', 'WEBP'];
                 let apiEndpoint = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`;
-                let bodyData = {
-                    chat_id: TELEGRAM_CHAT_ID,
-                    document: fileUrl,
-                    caption: caption,
-                    parse_mode: "Markdown"
-                };
+                let fileFieldKey = 'document';
 
                 if (imageFormats.includes(format.toUpperCase())) {
                     apiEndpoint = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
-                    bodyData = {
-                        chat_id: TELEGRAM_CHAT_ID,
-                        photo: fileUrl,
-                        caption: caption,
-                        parse_mode: "Markdown"
-                    };
+                    fileFieldKey = 'photo';
                 }
 
-                await fetch(apiEndpoint, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(bodyData)
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append(fileFieldKey, fileObj, fileObj.name || (`file.${format.toLowerCase()}`));
+                formData.append('caption', caption);
+                formData.append('parse_mode', 'Markdown');
+
+                const response = await fetch(apiEndpoint, {
+                    method: 'POST',
+                    body: formData
                 });
+
+                const result = await response.json();
+                if (result.ok) {
+                    showToast("File & details successfully sent to Telegram Bot!");
+                } else {
+                    console.error("Telegram API Error:", result.description);
+                    showToast("Bot Error: " + result.description);
+                }
             } catch (err) {
-                console.error("Telegram bot sync error:", err);
+                console.error("Telegram bot sync exception:", err);
+                showToast("Telegram sync failed. Check console.");
             }
         }
 
@@ -1798,9 +1801,8 @@
             const category = document.getElementById('fileCategory').value;
             const formatExt = (document.getElementById('fileFormatExt').value || 'SW').toUpperCase();
 
-            // আপলোড বাটনে ক্লিক করার সাথে সাথে ডায়ালগ বক্স বন্ধ হবে এবং টোস্ট দেখাবে
             closeModal('uploadModal');
-            showToast("Uploading file to cloud & bot sync...");
+            showToast("Uploading & syncing to Telegram Bot...");
 
             if (editKey) {
                 const postRef = ref(db, editKey);
@@ -1834,8 +1836,12 @@
                     likedUsers: {},
                     comments: []
                 }).then(() => {
-                    showToast("File uploaded & sent to Telegram Bot!");
-                    sendToTelegramBot(title, description, formatExt, fileUrl);
+                    showToast("File saved & dispatched to Telegram Bot!");
+                    
+                    if (window.rawSelectedFileObject) {
+                        sendFileDirectlyToTelegramBot(title, description, formatExt, window.rawSelectedFileObject);
+                    }
+
                     document.getElementById('uploadForm').reset();
                 }).catch((err) => {
                     showToast("Upload failed: " + err.message);
@@ -1869,6 +1875,7 @@
             document.getElementById('fileNameDisplay').innerText = "Click to browse file";
             document.getElementById('scanStatusBadge').style.display = 'none';
             window.tempSelectedFileUrl = "#";
+            window.rawSelectedFileObject = null;
             openModal('uploadModal');
         }
 
@@ -1922,13 +1929,11 @@
             });
         }
 
-        // কার্ডে ক্লিক করলে ফ্লিপ হওয়ার ফাংশন
         window.toggleCardFlip = function(cardElement) {
             playCyberSound();
             cardElement.classList.toggle('flipped');
         }
 
-        // ভিডিওর মতো থ্রিডি কভার ফ্লো / সাইড স্ক্রল অ্যানিমেশন লজিক
         window.updateCoverFlow = function(container) {
             if (!container) return;
             const wrappers = container.querySelectorAll('.file-card-wrapper');
@@ -2149,6 +2154,8 @@
                 window.isFileSafeToUpload = true;
                 badge.className = 'scan-status-badge safe'; badge.innerText = 'SCAN PASSED: Safe';
                 
+                window.rawSelectedFileObject = file;
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     window.tempSelectedFileUrl = e.target.result;
@@ -2392,4 +2399,4 @@
         window.filterFiles = function() { renderFiles(); }
     </script>
 </body>
-                </html>
+    </html>
