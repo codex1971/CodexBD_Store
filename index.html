@@ -743,6 +743,7 @@
             line-height: 1.5;
             overflow-y: auto;
             flex: 1;
+            white-space: pre-wrap;
         }
 
         .file-preview {
@@ -1754,11 +1755,10 @@
                 }
                 window.filesData.reverse();
                 
-                setTimeout(() => {
-                    if (typeof window.renderFiles === 'function') {
-                        window.renderFiles();
-                    }
-                }, 3500);
+                // ডেটা আসা মাত্রই দ্রুত (৩-৪ সেকেন্ডের মধ্যে বা ইনস্ট্যান্ট) রেন্ডার করার ব্যবস্থা
+                if (typeof window.renderFiles === 'function') {
+                    window.renderFiles();
+                }
 
             }, (error) => {
                 showToast("Data sync error: " + error.message);
@@ -1895,9 +1895,39 @@
             });
         }
 
-        window.toggleCardFlip = function(cardElement) {
+        // সিঙ্গেল কার্ড ফ্লিপ লজিক: একটি কার্ড ঘুরলে অন্যটি অটোমেটিক সোজা হয়ে যাবে
+        window.toggleCardFlip = function(cardWrapper) {
             playCyberSound();
-            cardElement.classList.toggle('flipped');
+            const isFlipped = cardWrapper.classList.contains('flipped');
+            
+            // সব কার্ড থেকে ফ্লিড ক্লাস সরিয়ে দেওয়া (সব সোজা করা)
+            document.querySelectorAll('.file-card-wrapper').forEach(el => {
+                el.classList.remove('flipped');
+                const descEl = el.querySelector('.back-desc');
+                if(descEl && descEl.typingInterval) clearInterval(descEl.typingInterval);
+            });
+
+            // যদি আগেরটি ফ্লিফড না থাকে, তবে বর্তমানটি ফ্লিপ করো এবং টাইপিং অ্যানিমেশন চালাও
+            if (!isFlipped) {
+                cardWrapper.classList.add('flipped');
+                const descEl = cardWrapper.querySelector('.back-desc');
+                const fullText = cardWrapper.getAttribute('data-desc') || 'No description provided.';
+                
+                if (descEl) {
+                    descEl.innerHTML = '';
+                    let i = 0;
+                    if(descEl.typingInterval) clearInterval(descEl.typingInterval);
+                    
+                    descEl.typingInterval = setInterval(() => {
+                        if (i < fullText.length) {
+                            descEl.innerHTML += fullText.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(descEl.typingInterval);
+                        }
+                    }, 20);
+                }
+            }
         }
 
         window.updateCoverFlow = function(container) {
@@ -2175,6 +2205,7 @@
                     const iconClass = getFileIcon(file.category, file.format);
                     const cardWrapper = document.createElement('div');
                     cardWrapper.className = 'file-card-wrapper';
+                    cardWrapper.setAttribute('data-desc', file.description || 'No description provided.');
                     cardWrapper.onclick = function(e) {
                         if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) return;
                         window.toggleCardFlip(this);
@@ -2238,7 +2269,7 @@
                             <div class="file-card-back">
                                 <div>
                                     <div class="back-title"><i class="fa-solid fa-circle-info"></i> DESCRIPTION</div>
-                                    <div class="back-desc">${file.description || 'No description provided.'}</div>
+                                    <div class="back-desc"></div>
                                 </div>
                                 <div style="text-align: center; font-size: 0.78rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
                                     Click card to flip back ⟲
@@ -2277,6 +2308,7 @@
                         const iconClass = getFileIcon(file.category, file.format);
                         const cardWrapper = document.createElement('div');
                         cardWrapper.className = 'file-card-wrapper';
+                        cardWrapper.setAttribute('data-desc', file.description || 'No description provided.');
                         cardWrapper.onclick = function(e) {
                             if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) return;
                             window.toggleCardFlip(this);
@@ -2340,7 +2372,7 @@
                                 <div class="file-card-back">
                                     <div>
                                         <div class="back-title"><i class="fa-solid fa-circle-info"></i> DESCRIPTION</div>
-                                        <div class="back-desc">${file.description || 'No description provided.'}</div>
+                                        <div class="back-desc"></div>
                                     </div>
                                     <div style="text-align: center; font-size: 0.78rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
                                         Click card to flip back ⟲
@@ -2370,4 +2402,4 @@
         window.filterFiles = function() { renderFiles(); }
     </script>
 </body>
-</html>
+    </html>
