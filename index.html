@@ -71,10 +71,10 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* ----- Facebook-style Cyber Skeleton Loader ----- */
+        /* ফেসবুক স্টাইলের শিমার Skeleton Loader (বড় সাইজ) */
         .skeleton-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 290px));
+            grid-template-columns: repeat(auto-fit, minmax(310px, 330px));
             justify-content: center;
             gap: 25px;
             width: 100%;
@@ -82,8 +82,8 @@
         }
 
         .skeleton-card {
-            width: 280px;
-            height: 350px;
+            width: 320px;
+            height: 390px;
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
             clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
@@ -121,20 +121,20 @@
 
         .skeleton-preview {
             width: 100%;
-            height: 145px;
+            height: 170px;
             border-bottom: 1px solid var(--glass-border);
         }
 
         .skeleton-body {
-            padding: 14px;
+            padding: 18px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .skeleton-title {
-            height: 18px;
+            height: 20px;
             width: 80%;
             border-radius: 4px;
         }
@@ -145,7 +145,7 @@
         }
 
         .skeleton-meta-item {
-            height: 12px;
+            height: 14px;
             width: 35%;
             border-radius: 3px;
         }
@@ -155,13 +155,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 10px;
+            padding-top: 12px;
             border-top: 1px solid var(--glass-border);
         }
 
         .skeleton-btn {
-            height: 26px;
-            width: 70px;
+            height: 28px;
+            width: 80px;
             border-radius: 4px;
         }
 
@@ -689,7 +689,7 @@
 
         .all-files-stack {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 290px));
+            grid-template-columns: repeat(auto-fit, minmax(310px, 330px));
             justify-content: center;
             gap: 25px;
             margin: 0 auto;
@@ -743,9 +743,10 @@
             box-shadow: 0 0 10px var(--accent-cyan);
         }
 
+        /* কার্ডের সাইজ বড় করা হয়েছে (Width: 320px, Height: 390px) */
         .file-card-wrapper {
-            width: 280px;
-            height: 350px;
+            width: 320px;
+            height: 390px;
             flex: 0 0 auto;
             perspective: 1000px;
             cursor: pointer;
@@ -811,7 +812,7 @@
 
         .file-preview {
             width: 100%;
-            height: 145px;
+            height: 170px;
             background: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
@@ -820,19 +821,19 @@
             border-bottom: 1px solid var(--border-glow);
         }
 
-        .file-icon-large { font-size: 2.8rem; color: var(--accent-cyan); filter: drop-shadow(0 0 10px var(--accent-cyan)); }
+        .file-icon-large { font-size: 3.2rem; color: var(--accent-cyan); filter: drop-shadow(0 0 10px var(--accent-cyan)); }
 
         .file-details {
-            padding: 14px;
+            padding: 16px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
 
         .file-title {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
@@ -840,11 +841,11 @@
         }
 
         .file-meta {
-            font-size: 0.78rem;
+            font-size: 0.82rem;
             color: var(--text-secondary);
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-family: 'Share Tech Mono', monospace;
         }
 
@@ -853,7 +854,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: 8px;
+            padding-top: 10px;
             border-top: 1px solid var(--glass-border);
             flex-wrap: wrap;
             gap: 5px;
@@ -878,8 +879,8 @@
             color: var(--accent-cyan);
             border: 1px solid var(--accent-cyan);
             clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-            padding: 5px 10px;
-            font-size: 0.78rem;
+            padding: 6px 12px;
+            font-size: 0.8rem;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -892,21 +893,21 @@
             gap: 5px;
             width: 100%;
             justify-content: flex-end;
-            margin-top: 5px;
+            margin-top: 6px;
         }
         .edit-post-btn {
             background: rgba(255, 170, 0, 0.15);
             color: #ffaa00;
             border: 1px solid #ffaa00;
-            padding: 3px 8px;
-            font-size: 0.75rem;
+            padding: 4px 10px;
+            font-size: 0.78rem;
             cursor: pointer;
             font-weight: bold;
         }
 
         .comments-section {
-            margin-top: 8px;
-            padding-top: 6px;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 1px dashed var(--glass-border);
         }
 
@@ -914,7 +915,7 @@
             background: transparent;
             border: none;
             color: var(--accent-cyan);
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -930,22 +931,22 @@
         }
 
         .comments-dropdown-wrapper.open {
-            max-height: 130px;
+            max-height: 140px;
             opacity: 1;
         }
 
         .comments-list {
-            max-height: 50px;
+            max-height: 60px;
             overflow-y: auto;
-            margin-bottom: 3px;
-            font-size: 0.75rem;
+            margin-bottom: 4px;
+            font-size: 0.78rem;
             color: var(--text-primary);
             font-family: 'Share Tech Mono', monospace;
         }
 
         .comment-item {
             background: rgba(0, 243, 255, 0.05);
-            padding: 2px 4px;
+            padding: 3px 5px;
             margin-bottom: 2px;
             border-left: 2px solid var(--accent-cyan);
             word-break: break-all;
@@ -961,8 +962,8 @@
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid var(--glass-border);
             color: #fff;
-            padding: 3px 5px;
-            font-size: 0.75rem;
+            padding: 4px 6px;
+            font-size: 0.78rem;
             outline: none;
         }
 
@@ -970,10 +971,10 @@
             background: var(--accent-cyan);
             color: #000;
             border: none;
-            padding: 3px 6px;
+            padding: 4px 8px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
         }
 
         .modal-overlay {
@@ -1322,22 +1323,8 @@
         </div>
 
         <div id="fileSectionsContainer">
-            <!-- ফেসবুক স্টাইলের শিমার Skeleton Loader -->
+            <!-- শিমার Skeleton Loader (ইনস্ট্যান্ট লোডিংয়ের জন্য) -->
             <div class="skeleton-wrapper">
-                <div class="skeleton-card">
-                    <div class="skeleton-preview shimmer-line"></div>
-                    <div class="skeleton-body">
-                        <div class="skeleton-title shimmer-line"></div>
-                        <div class="skeleton-meta">
-                            <div class="skeleton-meta-item shimmer-line"></div>
-                            <div class="skeleton-meta-item shimmer-line"></div>
-                        </div>
-                        <div class="skeleton-actions">
-                            <div class="skeleton-btn shimmer-line"></div>
-                            <div class="skeleton-btn shimmer-line"></div>
-                        </div>
-                    </div>
-                </div>
                 <div class="skeleton-card">
                     <div class="skeleton-preview shimmer-line"></div>
                     <div class="skeleton-body">
@@ -1494,7 +1481,7 @@
         </div>
     </div>
 
-    <!-- ডেভলপার ইনফো মডাল -->
+    <!-- ডেভলপার ইনফো মডাল (নাম ঠিক করে খোকন তালুকদার করা হয়েছে) -->
     <div class="modal-overlay" id="contactModal" onclick="preventOutsideClose(event)">
         <div class="modal-card" style="text-align: center;">
             <div class="modal-header">
@@ -1503,7 +1490,7 @@
             </div>
             <div style="padding: 10px 0;">
                 <i class="fa-solid fa-user-gear" style="font-size: 3rem; color: var(--accent-cyan); margin-bottom: 12px; filter: drop-shadow(0 0 10px var(--accent-cyan));"></i>
-                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon</h2>
+                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon Talukdar</h2>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
                     <a href="https://www.facebook.com/Khokon.talukder.2026" target="_blank" class="btn-primary ripple-target" style="padding: 10px 18px;">
                         <i class="fa-brands fa-facebook"></i> Contact Developer
@@ -1859,7 +1846,7 @@
                 }
                 window.filesData.reverse();
                 
-                // ফায়ারবেজ থেকে ডেটা লোড হওয়া মাত্রই সাথে সাথে কার্ডগুলো শো করবে (কোনো সময় নষ্ট হবে না)
+                // ডেটা আসার সাথে সাথে ইনস্ট্যান্ট রেন্ডার হবে, কোনো ডিলে রাখা হয়নি
                 if (typeof window.renderFiles === 'function') {
                     window.renderFiles();
                 }
@@ -2004,14 +1991,12 @@
             playCyberSound();
             const isFlipped = cardWrapper.classList.contains('flipped');
             
-            // পূর্বের যেকোনো উল্টানো কার্ড সোজা করে দেওয়া
             document.querySelectorAll('.file-card-wrapper').forEach(el => {
                 el.classList.remove('flipped');
                 const descEl = el.querySelector('.back-desc');
                 if(descEl && descEl.typingInterval) clearInterval(descEl.typingInterval);
             });
 
-            // বর্তমান কার্ডটি উল্টানো না থাকলে ফ্লিপ করে টাইপিং অ্যানিমেশন দেখানো
             if (!isFlipped) {
                 cardWrapper.classList.add('flipped');
                 const descEl = cardWrapper.querySelector('.back-desc');
@@ -2062,7 +2047,7 @@
                 currentUserId = user.uid;
                 window.currentUserEmailGlobal = user.email;
 
-                const savedName = localStorage.getItem('codexbd_user_name_' + currentUserEmail) || "Khokon";
+                const savedName = localStorage.getItem('codexbd_user_name_' + currentUserEmail) || "Khokon Talukdar";
                 const savedUsername = localStorage.getItem('codexbd_user_username_' + currentUserEmail) || currentUserEmail.split('@')[0];
                 const savedDob = localStorage.getItem('codexbd_user_dob_' + currentUserEmail) || "2000-08-23";
                 const savedGender = localStorage.getItem('codexbd_user_gender_' + currentUserEmail) || "Male";
@@ -2267,24 +2252,9 @@
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             if (!container) return;
             
-            // ফায়ারবেজের ডেটা লোড না হওয়া পর্যন্ত ফেসবুকের মতো শিমার স্কেলেটন দেখাবে
             if (!window.filesData || window.filesData.length === 0) {
                 container.innerHTML = `
                     <div class="skeleton-wrapper">
-                        <div class="skeleton-card">
-                            <div class="skeleton-preview shimmer-line"></div>
-                            <div class="skeleton-body">
-                                <div class="skeleton-title shimmer-line"></div>
-                                <div class="skeleton-meta">
-                                    <div class="skeleton-meta-item shimmer-line"></div>
-                                    <div class="skeleton-meta-item shimmer-line"></div>
-                                </div>
-                                <div class="skeleton-actions">
-                                    <div class="skeleton-btn shimmer-line"></div>
-                                    <div class="skeleton-btn shimmer-line"></div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="skeleton-card">
                             <div class="skeleton-preview shimmer-line"></div>
                             <div class="skeleton-body">
