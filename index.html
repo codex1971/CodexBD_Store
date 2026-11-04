@@ -71,6 +71,38 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* রিয়েল-টাইম লোডিং স্পিনার স্টাইল */
+        #loading-spinner-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            width: 100%;
+            grid-column: 1 / -1;
+        }
+        .cyber-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 243, 255, 0.1);
+            border-top: 3px solid var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+            margin-bottom: 12px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+        }
+
         .ripple-target {
             position: relative;
             overflow: hidden;
@@ -589,7 +621,7 @@
 
         .all-files-stack {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 285px));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 320px));
             justify-content: center;
             gap: 25px;
             margin: 0 auto;
@@ -643,9 +675,10 @@
             box-shadow: 0 0 10px var(--accent-cyan);
         }
 
+        /* কার্ডের সাইজ বড় করা হয়েছে (Width: 310px, Height: 380px) */
         .file-card-wrapper {
-            width: 275px;
-            height: 340px;
+            width: 310px;
+            height: 380px;
             flex: 0 0 auto;
             perspective: 1000px;
             cursor: pointer;
@@ -686,21 +719,21 @@
             transform: rotateY(180deg);
             background: rgba(5, 12, 28, 0.98);
             border-color: var(--accent-purple);
-            padding: 20px;
+            padding: 22px;
             justify-content: space-between;
         }
 
         .back-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--accent-cyan);
             margin-bottom: 10px;
             border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 6px;
+            padding-bottom: 8px;
         }
 
         .back-desc {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-primary);
             font-family: 'Share Tech Mono', monospace;
             line-height: 1.5;
@@ -710,7 +743,7 @@
 
         .file-preview {
             width: 100%;
-            height: 140px;
+            height: 160px;
             background: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
@@ -719,17 +752,17 @@
             border-bottom: 1px solid var(--border-glow);
         }
 
-        .file-icon-large { font-size: 2.8rem; color: var(--accent-cyan); filter: drop-shadow(0 0 10px var(--accent-cyan)); }
+        .file-icon-large { font-size: 3.2rem; color: var(--accent-cyan); filter: drop-shadow(0 0 10px var(--accent-cyan)); }
 
         .file-details {
-            padding: 14px;
+            padding: 16px;
             flex: 1;
             display: flex;
             flex-direction: column;
         }
 
         .file-title {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             font-weight: 700;
             margin-bottom: 6px;
             color: var(--text-primary);
@@ -739,11 +772,11 @@
         }
 
         .file-meta {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-family: 'Share Tech Mono', monospace;
         }
 
@@ -752,10 +785,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: 8px;
+            padding-top: 10px;
             border-top: 1px solid var(--glass-border);
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 6px;
         }
 
         .action-btn {
@@ -763,10 +796,10 @@
             border: none;
             color: var(--text-secondary);
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             font-weight: 600;
             transition: color 0.2s;
         }
@@ -777,12 +810,12 @@
             color: var(--accent-cyan);
             border: 1px solid var(--accent-cyan);
             clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-            padding: 5px 10px;
-            font-size: 0.75rem;
+            padding: 6px 12px;
+            font-size: 0.8rem;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             font-weight: 700;
         }
 
@@ -791,21 +824,21 @@
             gap: 5px;
             width: 100%;
             justify-content: flex-end;
-            margin-top: 5px;
+            margin-top: 6px;
         }
         .edit-post-btn {
             background: rgba(255, 170, 0, 0.15);
             color: #ffaa00;
             border: 1px solid #ffaa00;
-            padding: 3px 8px;
-            font-size: 0.72rem;
+            padding: 4px 10px;
+            font-size: 0.78rem;
             cursor: pointer;
             font-weight: bold;
         }
 
         .comments-section {
-            margin-top: 8px;
-            padding-top: 6px;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 1px dashed var(--glass-border);
         }
 
@@ -813,11 +846,11 @@
             background: transparent;
             border: none;
             color: var(--accent-cyan);
-            font-size: 0.78rem;
+            font-size: 0.82rem;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             font-weight: 600;
         }
 
@@ -837,14 +870,14 @@
             max-height: 60px;
             overflow-y: auto;
             margin-bottom: 4px;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--text-primary);
             font-family: 'Share Tech Mono', monospace;
         }
 
         .comment-item {
             background: rgba(0, 243, 255, 0.05);
-            padding: 2px 4px;
+            padding: 2px 5px;
             margin-bottom: 2px;
             border-left: 2px solid var(--accent-cyan);
             word-break: break-all;
@@ -860,8 +893,8 @@
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid var(--glass-border);
             color: #fff;
-            padding: 3px 5px;
-            font-size: 0.75rem;
+            padding: 4px 6px;
+            font-size: 0.78rem;
             outline: none;
         }
 
@@ -869,10 +902,10 @@
             background: var(--accent-cyan);
             color: #000;
             border: none;
-            padding: 3px 6px;
+            padding: 4px 8px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
         }
 
         .modal-overlay {
@@ -1220,7 +1253,13 @@
             </div>
         </div>
 
-        <div id="fileSectionsContainer"></div>
+        <div id="fileSectionsContainer">
+            <!-- ডিফল্ট লোডিং ইন্ডিকেটর -->
+            <div id="loading-spinner-box">
+                <div class="cyber-spinner"></div>
+                <div class="loading-text">CONNECTING TO VAULT & FETCHING FILES...</div>
+            </div>
+        </div>
 
         <footer>
             <p>&copy; 2026 CODEXBD STORE. Developed by <a href="#" onclick="openModal('contactModal')">Khokon Talukdar</a>.</p>
@@ -1686,6 +1725,7 @@
 
         function fetchFirebaseFiles() {
             const filesRef = ref(db, '/');
+            // rtdb অনভ্যালু লিসেনার রিয়েল-টাইম কাজ করবে এবং কোনো ক্যাশ ডিলে ছাড়াই ডেটা সিঙ্ক করবে
             onValue(filesRef, (snapshot) => {
                 const data = snapshot.val();
                 window.filesData = [];
@@ -1728,7 +1768,7 @@
             const formatExt = (document.getElementById('fileFormatExt').value || 'SW').toUpperCase();
 
             closeModal('uploadModal');
-            showToast("Processing upload...");
+            showToast("Uploading directly to vault...");
 
             if (editKey) {
                 const postRef = ref(db, editKey);
@@ -1762,7 +1802,7 @@
                     likedUsers: {},
                     comments: []
                 }).then(() => {
-                    showToast("File uploaded & saved successfully!");
+                    showToast("File uploaded & synced successfully!");
                     document.getElementById('uploadForm').reset();
                 }).catch((err) => {
                     showToast("Upload failed: " + err.message);
@@ -2086,16 +2126,28 @@
             const container = document.getElementById('fileSectionsContainer');
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             if (!container) return;
-            container.innerHTML = '';
-
+            
             const filteredFiles = (window.filesData || []).filter(file => {
                 const matchesFormat = (currentFormatFilter === 'all') || (file.format && file.format.toUpperCase() === currentFormatFilter.toUpperCase());
                 const matchesSearch = file.title && file.title.toLowerCase().includes(searchQuery);
                 return matchesFormat && matchesSearch;
             });
 
+            // ফাইল লোড না হওয়া পর্যন্ত বা ডেটা ফেচ করার সময় লোডার দেখাবে
+            if (!window.filesData || window.filesData.length === 0) {
+                // যদি এক সেকেন্ড পর ও ডেটা না আসে তবে নো ফাইল দেখাবে
+                container.innerHTML = `
+                    <div id="loading-spinner-box">
+                        <div class="cyber-spinner"></div>
+                        <div class="loading-text">SYNCING DIRECTLY WITH VAULT...</div>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+
             if (filteredFiles.length === 0) {
-                container.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-secondary); font-family: 'Share Tech Mono', monospace;">NO FILES UPLOADED YET</div>`;
+                container.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-secondary); font-family: 'Share Tech Mono', monospace;">NO FILES FOUND IN THIS CATEGORY</div>`;
                 return;
             }
 
@@ -2184,7 +2236,7 @@
                                     <div class="back-title"><i class="fa-solid fa-circle-info"></i> DESCRIPTION</div>
                                     <div class="back-desc">${file.description || 'No description provided.'}</div>
                                 </div>
-                                <div style="text-align: center; font-size: 0.75rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
+                                <div style="text-align: center; font-size: 0.78rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
                                     Click card to flip back ⟲
                                 </div>
                             </div>
@@ -2286,7 +2338,7 @@
                                         <div class="back-title"><i class="fa-solid fa-circle-info"></i> DESCRIPTION</div>
                                         <div class="back-desc">${file.description || 'No description provided.'}</div>
                                     </div>
-                                    <div style="text-align: center; font-size: 0.75rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
+                                    <div style="text-align: center; font-size: 0.78rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
                                         Click card to flip back ⟲
                                     </div>
                                 </div>
