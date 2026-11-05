@@ -71,7 +71,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Skeleton Loader (বড় সাইজ ও দ্রুত লোডিং) */
         .skeleton-wrapper {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(310px, 330px));
@@ -2034,12 +2033,10 @@
             });
         }
 
-        // থ্রি-ডট মেনু টগল করার ফাংশন
         window.toggleCardMenu = function(id, event) {
             event.stopPropagation();
             playCyberSound();
             
-            // অন্যান্য ওপেন থাকা মেনু বন্ধ করা
             document.querySelectorAll('.card-dropdown-menu').forEach(el => {
                 if (el.id !== `card-menu-${id}`) el.classList.remove('open');
             });
@@ -2050,12 +2047,10 @@
             }
         }
 
-        // যেকোনো জায়গায় ক্লিক করলে মেনু ক্লোজ হয়ে যাবে
         document.addEventListener('click', function() {
             document.querySelectorAll('.card-dropdown-menu').forEach(el => el.classList.remove('open'));
         });
 
-        // শেয়ার ফাংশন
         window.sharePost = function(title, fileUrl, event) {
             event.stopPropagation();
             if (navigator.share) {
@@ -2070,7 +2065,6 @@
             }
         }
 
-        // কার্ড ফ্লিপ লজিক
         window.toggleCardFlip = function(cardWrapper) {
             playCyberSound();
             const isFlipped = cardWrapper.classList.contains('flipped');
@@ -2312,7 +2306,6 @@
             const badge = document.getElementById('scanStatusBadge');
             const submitBtn = document.getElementById('uploadSubmitBtn');
 
-            // ফাইলের সাইজ হিসাব করা (MB বা KB)
             let calculatedSize = (file.size / (1024 * 1024)).toFixed(1) + " MB";
             if (file.size < 1024 * 1024) {
                 calculatedSize = (file.size / 1024).toFixed(1) + " KB";
@@ -2441,12 +2434,10 @@
                                 <div class="file-preview">
                                     <i class="fa-solid ${iconClass} file-icon-large"></i>
                                     
-                                    <!-- থ্রি-ডট মেনু বাটন (উপরের কোণায়) -->
                                     <button class="card-menu-btn ripple-target" onclick="toggleCardMenu('${file.id}', event)">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
 
-                                    <!-- ড্রপডাউন পপআপ মেনু -->
                                     <div class="card-dropdown-menu" id="card-menu-${file.id}">
                                         ${editDropdownItem}
                                         <button class="dropdown-item" onclick="sharePost('${file.title}', '${file.fileUrl}', event)">
@@ -2559,12 +2550,10 @@
                                     <div class="file-preview">
                                         <i class="fa-solid ${iconClass} file-icon-large"></i>
                                         
-                                        <!-- থ্রি-ডট মেনু বাটন (উপরের কোণায়) -->
                                         <button class="card-menu-btn ripple-target" onclick="toggleCardMenu('${file.id}', event)">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </button>
 
-                                        <!-- ড্রপডাউন পপআপ মেনু -->
                                         <div class="card-dropdown-menu" id="card-menu-${file.id}">
                                             ${editDropdownItem}
                                             <button class="dropdown-item" onclick="sharePost('${file.title}', '${file.fileUrl}', event)">
@@ -2638,4 +2627,4 @@
         window.filterFiles = function() { renderFiles(); }
     </script>
 </body>
-</html>
+    </html>
