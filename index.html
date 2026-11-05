@@ -149,6 +149,21 @@
             border-radius: 3px;
         }
 
+        .skeleton-actions {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .skeleton-btn {
+            height: 28px;
+            width: 80px;
+            border-radius: 4px;
+        }
+
         .ripple-target {
             position: relative;
             overflow: hidden;
@@ -311,6 +326,11 @@
             transition: all 0.3s ease;
         }
 
+        .holo-input-group select option {
+            background: #040916;
+            color: #fff;
+        }
+
         .holo-input-group input:focus,
         .holo-input-group select:focus {
             border-color: var(--accent-cyan);
@@ -355,7 +375,9 @@
             font-size: 1rem;
             transition: color 0.3s;
         }
-        .password-toggle-icon:hover { color: var(--accent-cyan); }
+        .password-toggle-icon:hover {
+            color: var(--accent-cyan);
+        }
 
         .forgot-password-link {
             text-align: right;
@@ -394,6 +416,8 @@
             box-shadow: 0 0 45px rgba(0, 243, 255, 0.9);
             transform: translateY(-2px);
         }
+
+        .holo-btn:active { transform: scale(0.96); }
 
         .auth-switch {
             text-align: center;
@@ -497,7 +521,9 @@
             gap: 6px;
             font-size: 0.85rem;
             text-decoration: none;
+            transition: transform 0.2s;
         }
+        .btn-primary:active { transform: scale(0.95); }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
@@ -511,7 +537,9 @@
             gap: 6px;
             font-size: 0.85rem;
             text-decoration: none;
+            transition: transform 0.2s;
         }
+        .btn-secondary:active { transform: scale(0.95); }
 
         .btn-logout {
             background: rgba(255, 0, 85, 0.15);
@@ -526,6 +554,12 @@
             font-size: 0.85rem;
             font-weight: 700;
             text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-logout:hover {
+            background: var(--accent-red);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
         }
 
         .controls-bar {
@@ -553,6 +587,16 @@
             outline: none;
         }
 
+        .floating-input-group select option {
+            background: #060c1c;
+            color: #fff;
+        }
+
+        .floating-input-group textarea {
+            resize: vertical;
+            min-height: 75px;
+        }
+
         .floating-label {
             position: absolute;
             left: 14px;
@@ -565,8 +609,29 @@
             padding: 0 4px;
         }
 
+        .floating-input-group textarea + .floating-label {
+            top: 16px;
+            transform: translateY(0);
+        }
+
+        .floating-input-group input:focus + .floating-label,
+        .floating-input-group input:not(:placeholder-shown) + .floating-label,
+        .floating-input-group textarea:focus + .floating-label,
+        .floating-input-group textarea:not(:placeholder-shown) + .floating-label,
+        .floating-input-group select:focus + .floating-label,
+        .floating-input-group select:valid + .floating-label {
+            top: -8px;
+            left: 10px;
+            font-size: 0.72rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+            transform: translateY(0);
+        }
+
         .search-box-group { margin-bottom: 0; }
         .search-box-group .floating-label { left: 40px; }
+        .search-box-group input:focus + .floating-label,
+        .search-box-group input:not(:placeholder-shown) + .floating-label { left: 14px; }
 
         .search-box-icon {
             position: absolute;
@@ -582,13 +647,21 @@
             gap: 8px;
             overflow-x: auto;
             scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
             padding: 10px 2px;
             position: relative;
             z-index: 80;
             width: 100%;
             align-items: center;
+            animation: upDownFloat 3s ease-in-out infinite;
         }
         .filter-tabs::-webkit-scrollbar { display: none; }
+
+        @keyframes upDownFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
 
         .filter-btn {
             background: var(--card-bg);
@@ -603,6 +676,7 @@
             flex: 0 0 auto;
             min-width: 80px;
             text-align: center;
+            transition: all 0.25s ease;
         }
 
         .filter-btn.active {
@@ -624,6 +698,12 @@
 
         .category-section {
             margin-bottom: 35px;
+            animation: fadeInSection 0.5s ease;
+        }
+
+        @keyframes fadeInSection {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .category-title {
@@ -633,6 +713,7 @@
             margin-bottom: 15px;
             padding-left: 5px;
             border-left: 3px solid var(--accent-cyan);
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
         }
 
         .category-scroll-row {
@@ -640,11 +721,25 @@
             gap: 25px;
             overflow-x: auto;
             scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
             padding: 30px 15px;
             scrollbar-width: thin;
             scrollbar-color: var(--accent-cyan) rgba(0,0,0,0.5);
             align-items: center;
+            perspective: 1200px;
             justify-content: flex-start;
+        }
+        .category-scroll-row::-webkit-scrollbar {
+            height: 6px;
+        }
+        .category-scroll-row::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 3px;
+        }
+        .category-scroll-row::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+            border-radius: 3px;
+            box-shadow: 0 0 10px var(--accent-cyan);
         }
 
         .file-card-wrapper {
@@ -653,6 +748,7 @@
             flex: 0 0 auto;
             perspective: 1000px;
             cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             margin: 0 auto;
         }
 
@@ -676,6 +772,7 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
             clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
@@ -737,6 +834,11 @@
             justify-content: center;
             cursor: pointer;
             z-index: 10;
+            transition: all 0.2s;
+        }
+        .card-menu-btn:hover {
+            background: rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 10px var(--accent-cyan);
         }
 
         .card-dropdown-menu {
@@ -747,14 +849,15 @@
             border: 1px solid var(--accent-cyan);
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
             border-radius: 6px;
-            width: 150px;
+            width: 140px;
             z-index: 20;
             display: none;
             flex-direction: column;
             overflow: hidden;
         }
-        .card-dropdown-menu.open { display: flex; }
-
+        .card-dropdown-menu.open {
+            display: flex;
+        }
         .dropdown-item {
             padding: 10px 12px;
             color: var(--text-primary);
@@ -768,6 +871,7 @@
             align-items: center;
             gap: 8px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.2s;
             text-decoration: none;
         }
         .dropdown-item:hover {
@@ -810,6 +914,8 @@
             justify-content: space-between;
             padding-top: 10px;
             border-top: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+            gap: 5px;
         }
 
         .action-btn {
@@ -822,12 +928,27 @@
             align-items: center;
             gap: 4px;
             font-weight: 600;
+            transition: color 0.2s;
         }
         .action-btn.liked { color: var(--accent-red) !important; }
 
+        .download-btn {
+            background: rgba(0, 243, 255, 0.12);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+        }
+
         .comments-section {
-            margin-top: 8px;
-            padding-top: 6px;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 1px dashed var(--glass-border);
         }
 
@@ -835,7 +956,7 @@
             background: transparent;
             border: none;
             color: var(--accent-cyan);
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -846,120 +967,63 @@
         .comments-dropdown-wrapper {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease, opacity 0.3s ease;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
             opacity: 0;
         }
-        .comments-dropdown-wrapper.open { max-height: 120px; opacity: 1; }
+
+        .comments-dropdown-wrapper.open {
+            max-height: 140px;
+            opacity: 1;
+        }
 
         .comments-list {
-            max-height: 50px;
+            max-height: 60px;
             overflow-y: auto;
             margin-bottom: 4px;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--text-primary);
             font-family: 'Share Tech Mono', monospace;
         }
 
         .comment-item {
             background: rgba(0, 243, 255, 0.05);
-            padding: 2px 4px;
+            padding: 3px 5px;
             margin-bottom: 2px;
             border-left: 2px solid var(--accent-cyan);
+            word-break: break-all;
         }
 
-        .comment-input-box { display: flex; gap: 4px; }
+        .comment-input-box {
+            display: flex;
+            gap: 4px;
+        }
+
         .comment-input {
             flex: 1;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid var(--glass-border);
             color: #fff;
-            padding: 3px 5px;
-            font-size: 0.75rem;
+            padding: 4px 6px;
+            font-size: 0.78rem;
             outline: none;
         }
+
         .comment-submit-btn {
             background: var(--accent-cyan);
             color: #000;
             border: none;
-            padding: 3px 6px;
+            padding: 4px 8px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 0.75rem;
-        }
-
-        /* সাইবার ফিউচারিস্টিক কাস্টম পিকার মোডাল স্টাইল */
-        .cyber-picker-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 2, 8, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 999999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            padding: 15px;
-        }
-        .cyber-picker-overlay.active { opacity: 1; visibility: visible; }
-
-        .cyber-picker-card {
-            background: #04091c;
-            border: 2px solid var(--accent-cyan);
-            box-shadow: 0 0 35px rgba(0, 243, 255, 0.4);
-            width: 100%;
-            max-width: 380px;
-            padding: 25px 20px;
-            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
-            transform: scale(0.7) rotateX(15deg);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .cyber-picker-overlay.active .cyber-picker-card {
-            transform: scale(1) rotateX(0deg);
-        }
-
-        .cyber-picker-title {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--accent-cyan);
-            font-size: 1.1rem;
-            margin-bottom: 18px;
-            text-align: center;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-        }
-
-        .cyber-options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-
-        .cyber-picker-option {
-            background: rgba(0, 243, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            padding: 12px 16px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.95rem;
-            cursor: pointer;
-            text-align: center;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: all 0.25s ease;
-        }
-        .cyber-picker-option:hover {
-            background: rgba(0, 243, 255, 0.2);
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
-            transform: translateY(-2px);
+            font-size: 0.78rem;
         }
 
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background: rgba(1, 4, 10, 0.88);
             backdrop-filter: blur(8px);
             z-index: 10000;
@@ -970,6 +1034,7 @@
             visibility: hidden;
             transition: all 0.25s ease;
             padding: 15px;
+            overflow-y: auto;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
 
@@ -985,7 +1050,9 @@
             transform: scale(0.9);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .modal-overlay.active .modal-card { transform: scale(1); }
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
 
         .modal-header {
             display: flex;
@@ -1009,6 +1076,120 @@
             font-size: 1rem;
         }
 
+        .profile-avatar-container {
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-cyan);
+            margin: 0 auto;
+            display: block;
+            background: #020916;
+        }
+        .profile-edit-badge {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(30px);
+            background: var(--accent-cyan);
+            color: #000;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .custom-select-trigger {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-glow);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .custom-options {
+            position: absolute;
+            top: 105%;
+            left: 0;
+            right: 0;
+            background: #040814;
+            border: 1px solid var(--accent-cyan);
+            z-index: 100;
+            display: none;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .custom-options.open { display: block; }
+        .custom-option {
+            padding: 9px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+        }
+        .custom-option:hover { background: rgba(0, 243, 255, 0.2); color: var(--accent-cyan); }
+
+        .drop-zone {
+            border: 2px dashed var(--accent-cyan);
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(0, 243, 255, 0.02);
+            margin-bottom: 15px;
+        }
+        .drop-zone i { font-size: 2rem; color: var(--accent-cyan); margin-bottom: 6px; }
+
+        .scan-status-badge {
+            display: none;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.82rem;
+            padding: 5px 8px;
+            margin-top: 8px;
+        }
+        .scan-status-badge.safe { display: block; background: rgba(0, 255, 102, 0.15); color: var(--accent-green); }
+        .scan-status-badge.blocked { display: block; background: rgba(255, 0, 85, 0.15); color: var(--accent-red); }
+
+        .policy-text-box {
+            font-family: 'Share Tech Mono', monospace;
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid var(--border-glow);
+            padding: 14px;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            line-height: 1.5;
+            max-height: 240px;
+            overflow-y: auto;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 6px; height: 12px;
+            background: var(--accent-cyan);
+            margin-left: 3px;
+            animation: cursorBlink 0.8s infinite;
+        }
+        @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
         footer {
             text-align: center; padding: 15px 0;
             border-top: 1px solid var(--glass-border);
@@ -1022,27 +1203,10 @@
     <div class="cyber-grid"></div>
     <div id="toast-notification">Notification Message</div>
 
-    <!-- কাস্টম সাইবার ফিউচারিস্টিক ডেট ও জেন্ডার পিকার মোডাল -->
-    <div class="cyber-picker-overlay" id="cyberPickerModal">
-        <div class="cyber-picker-card">
-            <h3 class="cyber-picker-title" id="cyberPickerTitle">SELECT VALUE</h3>
-            <div class="cyber-options-list" id="cyberPickerOptionsList"></div>
-            <button type="button" class="holo-btn ripple-target" onclick="closeCyberPicker()" style="margin-top: 18px; padding: 10px; font-size: 0.85rem;">
-                CANCEL
-            </button>
-        </div>
-    </div>
-
-    <!-- ফাইল ইনফো মডাল -->
-    <div class="modal-overlay" id="fileInfoModal" onclick="preventOutsideClose(event)">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3><i class="fa-solid fa-circle-info" style="color: var(--accent-cyan);"></i> File Information</h3>
-                <button class="dialog-close-btn ripple-target" onclick="closeModal('fileInfoModal')"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div id="fileInfoContentBox" style="font-family: 'Share Tech Mono', monospace; font-size: 0.9rem; line-height: 1.6; color: var(--text-primary); display: flex; flex-direction: column; gap: 10px;">
-                <!-- ডাইনামিক ডেটা ইনজেক্ট হবে -->
-            </div>
+    <div id="intro-screen">
+        <canvas id="intro-canvas"></canvas>
+        <div class="glitch-box">
+            <h1 class="glitch-title" id="introTitle">CODEXBD</h1>
         </div>
     </div>
 
@@ -1068,20 +1232,19 @@
                             <input type="text" id="authUsername" placeholder=" ">
                             <label class="holo-label" for="authUsername">Username</label>
                         </div>
-                        
-                        <!-- কাস্টম সাইবার ফিউচারিস্টিক ডেট পিকার ইনপুট -->
-                        <div class="holo-input-group" onclick="openCyberDatePicker()" style="cursor: pointer;">
-                            <input type="text" id="authDobDisplay" placeholder=" " readonly style="cursor: pointer;">
-                            <label class="holo-label" for="authDobDisplay">Date of Birth</label>
+                        <div class="holo-input-group">
+                            <input type="date" id="authDob" placeholder=" ">
+                            <label class="holo-label" for="authDob">Date of Birth</label>
                         </div>
-                        <input type="hidden" id="authDob" value="">
-
-                        <!-- কাস্টম সাইবার ফিউচারিস্টিক জেন্ডার পিকার ইনপুট -->
-                        <div class="holo-input-group" onclick="openCyberGenderPicker()" style="cursor: pointer;">
-                            <input type="text" id="authGenderDisplay" placeholder=" " readonly style="cursor: pointer;">
-                            <label class="holo-label" for="authGenderDisplay">Gender</label>
+                        <div class="holo-input-group">
+                            <select id="authGender">
+                                <option value="" disabled selected></option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <label class="holo-label" for="authGender">Gender</label>
                         </div>
-                        <input type="hidden" id="authGender" value="">
                     </div>
 
                     <div class="holo-input-group">
@@ -1104,6 +1267,40 @@
                     </button>
                 </form>
 
+                <div id="forgotPasswordSection" style="display: none;">
+                    <div id="step1EmailContainer">
+                        <div class="holo-input-group">
+                            <input type="email" id="recoveryEmail" placeholder=" " required>
+                            <label class="holo-label" for="recoveryEmail">Enter Registered Email</label>
+                        </div>
+                        <button type="button" class="holo-btn ripple-target" onclick="sendRecoveryOtp()">
+                            <i class="fa-solid fa-paper-plane"></i> SEND OTP CODE
+                        </button>
+                    </div>
+
+                    <div id="step2OtpContainer" style="display: none;">
+                        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px; font-family: 'Share Tech Mono', monospace;" id="otpInstructionText">
+                            An OTP has been dispatched to your email.
+                        </p>
+                        <div class="holo-input-group">
+                            <input type="text" id="enteredOtp" placeholder=" " maxlength="6">
+                            <label class="holo-label" for="enteredOtp">Enter 6-Digit OTP</label>
+                        </div>
+                        <div class="holo-input-group">
+                            <input type="password" id="newResetPassword" placeholder=" ">
+                            <label class="holo-label" for="newResetPassword">New Password</label>
+                            <i class="fa-solid fa-eye password-toggle-icon" onclick="toggleNewPasswordVisibility()"></i>
+                        </div>
+                        <button type="button" class="holo-btn ripple-target" onclick="verifyAndResetPassword()">
+                            <i class="fa-solid fa-shield-halved"></i> VERIFY & RESET
+                        </button>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 15px;">
+                        <span style="color: var(--accent-cyan); cursor: pointer; font-size: 0.85rem; font-family: 'Share Tech Mono', monospace; text-decoration: underline;" onclick="backToLoginFromForgot()">Back to Login</span>
+                    </div>
+                </div>
+
                 <div class="auth-switch" id="authSwitchText">
                     New user? <span onclick="toggleAuthMode()">Create Account</span>
                 </div>
@@ -1120,6 +1317,9 @@
             <div class="header-actions">
                 <button class="btn-secondary ripple-target" onclick="openModal('profileModal')">
                     <i class="fa-solid fa-user-shield"></i> Profile
+                </button>
+                <button class="btn-secondary ripple-target" onclick="openModal('contactModal')">
+                    <i class="fa-solid fa-code"></i> Dev
                 </button>
                 <button class="btn-primary ripple-target" onclick="openUploadModalForNew()">
                     <i class="fa-solid fa-cloud-arrow-up"></i> Upload
@@ -1141,26 +1341,229 @@
                 <button type="button" class="filter-btn ripple-target active" onclick="handleFormatClick('all', this)">All</button>
                 <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('SW', this)">.SW</button>
                 <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('JSON', this)">.JSON</button>
-                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('APK', this)">.APK</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('SH', this)">.SH</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('PY', this)">.PY</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('JS', this)">.JS</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('HTML', this)">.HTML</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('CSS', this)">.CSS</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('JAVA', this)">.JAVA</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('CPP', this)">.CPP</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('JPG', this)">.JPG</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('PNG', this)">.PNG</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('WEBP', this)">.WEBP</button>
                 <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('MP4', this)">.MP4</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('MKV', this)">.MKV</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('MP3', this)">.MP3</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('WAV', this)">.WAV</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('PDF', this)">.PDF</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('TXT', this)">.TXT</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('APK', this)">.APK</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('ZIP', this)">.ZIP</button>
+                <button type="button" class="filter-btn ripple-target" onclick="handleFormatClick('RAR', this)">.RAR</button>
             </div>
         </div>
 
         <div id="fileSectionsContainer">
+            <!-- শিমার Skeleton Loader -->
             <div class="skeleton-wrapper">
-                <div class="skeleton-card"><div class="skeleton-preview shimmer-line"></div></div>
+                <div class="skeleton-card">
+                    <div class="skeleton-preview shimmer-line"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-title shimmer-line"></div>
+                        <div class="skeleton-meta">
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                        </div>
+                        <div class="skeleton-actions">
+                            <div class="skeleton-btn shimmer-line"></div>
+                            <div class="skeleton-btn shimmer-line"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-preview shimmer-line"></div>
+                    <div class="skeleton-body">
+                        <div class="skeleton-title shimmer-line"></div>
+                        <div class="skeleton-meta">
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                            <div class="skeleton-meta-item shimmer-line"></div>
+                        </div>
+                        <div class="skeleton-actions">
+                            <div class="skeleton-btn shimmer-line"></div>
+                            <div class="skeleton-btn shimmer-line"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <footer>
-            <p>&copy; 2026 CODEXBD STORE. Developed by Khokon Talukdar.</p>
+            <p>&copy; 2026 CODEXBD STORE. Developed by <a href="#" onclick="openModal('contactModal')">Khokon Talukdar</a>.</p>
         </footer>
     </div>
 
+    <!-- প্রোফাইল মডাল -->
+    <div class="modal-overlay" id="profileModal" onclick="preventOutsideClose(event)">
+        <div class="modal-card">
+            <div style="position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; align-items: center;">
+                <button onclick="toggleProfileEditMode()" class="btn-secondary ripple-target" style="padding: 5px 10px; font-size: 0.75rem;">
+                    <i class="fa-solid fa-pen-to-square"></i> <span id="profileEditBtnText">Edit</span>
+                </button>
+                <button class="dialog-close-btn ripple-target" onclick="closeModal('profileModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-id-badge" style="color: var(--accent-cyan);"></i> User Profile</h3>
+            </div>
+
+            <div class="profile-avatar-container">
+                <img id="profileAvatarImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f3ff'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>" alt="Avatar" class="profile-avatar">
+                <div class="profile-edit-badge" id="profileCameraBadge" style="display: none;" onclick="document.getElementById('profileAvatarInput').click()">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+                <input type="file" id="profileAvatarInput" style="display: none;" accept="image/*" onchange="handleAvatarSelect(event)">
+            </div>
+
+            <div class="floating-input-group">
+                <input type="text" id="profileNameDisplay" readonly placeholder=" ">
+                <label class="floating-label">Full Name</label>
+            </div>
+            <div class="floating-input-group">
+                <input type="text" id="profileUsernameDisplay" readonly style="color: var(--accent-cyan); background: rgba(0,0,0,0.7); cursor: not-allowed;" placeholder=" ">
+                <label class="floating-label">Username (Locked)</label>
+            </div>
+            <div class="floating-input-group">
+                <input type="email" id="profileEmailDisplay" readonly style="color: var(--accent-cyan); background: rgba(0,0,0,0.7); cursor: not-allowed;" placeholder=" ">
+                <label class="floating-label">Email Address (Locked)</label>
+            </div>
+            <div class="floating-input-group">
+                <input type="date" id="profileDobDisplay" readonly style="color: var(--accent-cyan); background: rgba(0,0,0,0.7); cursor: not-allowed;" placeholder=" ">
+                <label class="floating-label">Date of Birth (Permanently Locked)</label>
+            </div>
+            <div class="floating-input-group">
+                <input type="text" id="profileGenderDisplay" readonly style="color: var(--accent-cyan); background: rgba(0,0,0,0.7); cursor: not-allowed;" placeholder=" ">
+                <label class="floating-label">Gender (Permanently Locked)</label>
+            </div>
+            <div class="floating-input-group">
+                <input type="text" id="profileCustomBio" readonly placeholder=" ">
+                <label class="floating-label" for="profileCustomBio">Custom Bio / Status</label>
+            </div>
+
+            <button type="button" id="profileSaveBtn" class="holo-btn ripple-target" onclick="saveUserProfile()" style="display: none; width: 100%; justify-content: center; padding: 10px; font-size: 0.9rem;">
+                <i class="fa-solid fa-floppy-disk"></i> Save Profile Customization
+            </button>
+        </div>
+    </div>
+
+    <!-- আপলোড / এডিট মডাল -->
+    <div class="modal-overlay" id="uploadModal" onclick="preventOutsideClose(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="uploadModalTitle">Secure File Upload</h3>
+                <button class="dialog-close-btn ripple-target" onclick="closeModal('uploadModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <form id="uploadForm" onsubmit="handleUploadSubmit(event)">
+                <input type="hidden" id="editPostKey" value="">
+                
+                <div class="floating-input-group">
+                    <input type="text" id="fileTitle" placeholder=" " required>
+                    <label class="floating-label" for="fileTitle">File title</label>
+                </div>
+
+                <div class="floating-input-group">
+                    <textarea id="fileDescInput" placeholder=" "></textarea>
+                    <label class="floating-label" for="fileDescInput">Description...</label>
+                </div>
+
+                <div class="custom-select-wrapper">
+                    <div class="custom-select-trigger ripple-target" onclick="toggleCustomDropdown()">
+                        <span id="selectedCategoryText"><i class="fa-solid fa-file-code"></i> .SW Sketchware Project</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="custom-options" id="customOptions">
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'SW', '.SW Sketchware Project', 'fa-file-code')"><i class="fa-solid fa-file-code"></i> .SW Sketchware Project</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'JSON', '.JSON Data / Config', 'fa-file-code')"><i class="fa-solid fa-file-code"></i> .JSON Data / Config</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'SH', '.SH Bash Script', 'fa-terminal')"><i class="fa-solid fa-terminal"></i> .SH Bash Script</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'PY', '.PY Python Script', 'fa-file-code')"><i class="fa-solid fa-file-code"></i> .PY Python Script</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'JS', '.JS JavaScript File', 'fa-file-code')"><i class="fa-solid fa-file-code"></i> .JS JavaScript File</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'HTML', '.HTML Web Page', 'fa-file-code')"><i class="fa-solid fa-file-code"></i> .HTML Web Page</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'CSS', '.CSS Stylesheet', 'fa-file-code')"><i class="fa-solid fa-file-code"></i> .CSS Stylesheet</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'JAVA', '.JAVA Source File', 'fa-file-code')"><i class="fa-solid fa-file-code"></i> .JAVA Source File</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('code', 'CPP', '.CPP C++ Source', 'fa-file-code')"><i class="fa-solid fa-file-code"></i> .CPP C++ Source</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('image', 'JPG', '.JPG Image', 'fa-file-image')"><i class="fa-solid fa-file-image"></i> .JPG Image</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('image', 'PNG', '.PNG Image', 'fa-file-image')"><i class="fa-solid fa-file-image"></i> .PNG Image</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('image', 'WEBP', '.WEBP Image', 'fa-file-image')"><i class="fa-solid fa-file-image"></i> .WEBP Image</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('video', 'MP4', '.MP4 Video', 'fa-file-video')"><i class="fa-solid fa-file-video"></i> .MP4 Video</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('video', 'MKV', '.MKV Video', 'fa-file-video')"><i class="fa-solid fa-file-video"></i> .MKV Video</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('audio', 'MP3', '.MP3 Audio', 'fa-file-audio')"><i class="fa-solid fa-file-audio"></i> .MP3 Audio</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('audio', 'WAV', '.WAV Audio', 'fa-file-audio')"><i class="fa-solid fa-file-audio"></i> .WAV Audio</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('document', 'PDF', '.PDF Document', 'fa-file-pdf')"><i class="fa-solid fa-file-pdf"></i> .PDF Document</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('document', 'TXT', '.TXT Text File', 'fa-file-lines')"><i class="fa-solid fa-file-lines"></i> .TXT Text File</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('other', 'APK', '.APK Android App', 'fa-android')"><i class="fa-solid fa-android"></i> .APK Android App</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('other', 'ZIP', '.ZIP Archive', 'fa-file-zipper')"><i class="fa-solid fa-file-zipper"></i> .ZIP Archive</div>
+                        <div class="custom-option ripple-target" onclick="selectCategory('other', 'RAR', '.RAR Archive', 'fa-file-zipper')"><i class="fa-solid fa-file-zipper"></i> .RAR Archive</div>
+                    </div>
+                </div>
+                <input type="hidden" id="fileCategory" value="code">
+                <input type="hidden" id="fileFormatExt" value="SW">
+                <input type="hidden" id="fileSizeVal" value="2.4 MB">
+
+                <div class="drop-zone ripple-target" id="dropZoneElement" onclick="document.getElementById('fileInput').click()">
+                    <i class="fa-solid fa-file-circle-plus" id="dropZoneIcon"></i>
+                    <p id="fileNameDisplay" style="font-size: 0.85rem;">Click to browse file</p>
+                    <div class="scan-status-badge" id="scanStatusBadge"></div>
+                    <input type="file" id="fileInput" style="display: none;" onchange="handleFileSelect(event)">
+                </div>
+
+                <button type="submit" id="uploadSubmitBtn" class="btn-primary ripple-target" style="width: 100%; justify-content: center; padding: 10px;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> <span id="uploadBtnText">Upload Now</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ডেভলপার ইনফো মডাল -->
+    <div class="modal-overlay" id="contactModal" onclick="preventOutsideClose(event)">
+        <div class="modal-card" style="text-align: center;">
+            <div class="modal-header">
+                <h3>Developer Information</h3>
+                <button class="dialog-close-btn ripple-target" onclick="closeModal('contactModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="padding: 10px 0;">
+                <i class="fa-solid fa-user-gear" style="font-size: 3rem; color: var(--accent-cyan); margin-bottom: 12px; filter: drop-shadow(0 0 10px var(--accent-cyan));"></i>
+                <h2 style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-bottom: 15px;">Khokon Talukdar</h2>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                    <a href="https://www.facebook.com/Khokon.talukder.2026" target="_blank" class="btn-primary ripple-target" style="padding: 10px 18px;">
+                        <i class="fa-brands fa-facebook"></i> Contact Developer
+                    </a>
+                    <button class="btn-secondary ripple-target" onclick="openPolicyModal()" style="padding: 10px 18px;">
+                        <i class="fa-solid fa-circle-info"></i> View Policy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- পলিসি মডাল -->
+    <div class="modal-overlay" id="policyModal" onclick="preventOutsideClose(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>CodexBD Store Policy</h3>
+                <button class="dialog-close-btn ripple-target" onclick="closeModal('policyModal')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="policy-text-box" id="policyScrollContainer">
+                <span id="typingPolicyTarget"></span><span class="typing-cursor" id="typingCursor"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ফায়ারবেজ মডিউল -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getDatabase, ref, set, push, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, get, push, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyCyZJsdodRp8ZSNMqzKbSmt1pb_QgW3JkE",
@@ -1169,16 +1572,27 @@
           projectId: "codexbd-26df0",
           storageBucket: "codexbd-26df0.firebasestorage.app",
           messagingSenderId: "258006837169",
-          appId: "1:258006837169:web:7bc2d9303273f9bc593f90"
+          appId: "1:258006837169:web:7bc2d9303273f9bc593f90",
+          measurementId: "G-TD6T7ETP77"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
+        const analytics = getAnalytics(app);
 
         let isSignUpMode = false;
         let currentUserEmail = "";
+        let currentUserId = "";
+        let isProfileEditMode = false;
+        let tempAvatarUrl = "";
+        let generatedOtpCode = "";
+        let recoveryTargetEmail = "";
         window.filesData = [];
+        window.tempSelectedFileUrl = "#";
+        window.tempFileSizeStr = "2.4 MB";
+
+        const defaultAvatarSvg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f3ff'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>";
 
         window.showToast = function(message) {
             const toast = document.getElementById('toast-notification');
@@ -1187,59 +1601,142 @@
             setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
-        // কাস্টম সাইবার ফিউচারিস্টিক ডেট ও জেন্ডার পিকার ফাংশন
-        window.openCyberDatePicker = function() {
-            const modal = document.getElementById('cyberPickerModal');
-            const title = document.getElementById('cyberPickerTitle');
-            const list = document.getElementById('cyberPickerOptionsList');
-            title.innerText = "SELECT DATE OF BIRTH";
-            list.innerHTML = '';
+        const playCyberSound = () => {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            } catch (e) {}
+        };
 
-            // সাম্প্রতিক এবং পাস্ট ইয়ারের কিছু সুন্দর স্যাম্পল বা ডাইনামিক ডেট জেনারেট করা
-            const currentYear = new Date().getFullYear();
-            for(let y = currentYear - 10; y >= currentYear - 35; y--) {
-                ['01-15', '06-20', '11-05'].forEach(md => {
-                    const dateStr = `${y}-${md}`;
-                    const opt = document.createElement('div');
-                    opt.className = 'cyber-picker-option';
-                    opt.innerText = dateStr;
-                    opt.onclick = function() {
-                        document.getElementById('authDobDisplay').value = dateStr;
-                        document.getElementById('authDob').value = dateStr;
-                        modal.classList.remove('active');
-                    };
-                    list.appendChild(opt);
-                });
+        const speakWelcomeVoice = () => {
+            try {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance("Welcome Codex BD");
+                    utterance.rate = 1.0;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+                    window.speechSynthesis.speak(utterance);
+                }
+            } catch(e) {}
+        };
+
+        window.togglePasswordVisibility = function() {
+            const passwordInput = document.getElementById('authPassword');
+            const toggleIcon = document.getElementById('togglePasswordBtn');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fa-solid fa-eye-slash password-toggle-icon';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fa-solid fa-eye password-toggle-icon';
             }
-            modal.classList.add('active');
         }
 
-        window.openCyberGenderPicker = function() {
-            const modal = document.getElementById('cyberPickerModal');
-            const title = document.getElementById('cyberPickerTitle');
-            const list = document.getElementById('cyberPickerOptionsList');
-            title.innerText = "SELECT GENDER";
-            list.innerHTML = '';
-
-            ['Male', 'Female', 'Other'].forEach(gender => {
-                const opt = document.createElement('div');
-                opt.className = 'cyber-picker-option';
-                opt.innerText = gender;
-                opt.onclick = function() {
-                    document.getElementById('authGenderDisplay').value = gender;
-                    document.getElementById('authGender').value = gender;
-                    modal.classList.remove('active');
-                };
-                list.appendChild(opt);
-            });
-            modal.classList.add('active');
+        window.toggleNewPasswordVisibility = function() {
+            const resetPassInput = document.getElementById('newResetPassword');
+            if (resetPassInput.type === 'password') {
+                resetPassInput.type = 'text';
+            } else {
+                resetPassInput.type = 'password';
+            }
         }
 
-        window.closeCyberPicker = function() {
-            document.getElementById('cyberPickerModal').classList.remove('active');
+        window.openForgotPasswordModal = function() {
+            playCyberSound();
+            document.getElementById('authForm').style.display = 'none';
+            document.getElementById('authSwitchText').style.display = 'none';
+            document.getElementById('forgotPasswordSection').style.display = 'block';
+            document.getElementById('step1EmailContainer').style.display = 'block';
+            document.getElementById('step2OtpContainer').style.display = 'none';
+            document.getElementById('authTitle').innerText = "RECOVER ACCESS";
+            document.getElementById('authSubtitle').innerText = "Email OTP Verification System";
+            document.getElementById('authErrorMsg').style.display = 'none';
+            document.getElementById('authSuccessMsg').style.display = 'none';
+        }
+
+        window.backToLoginFromForgot = function() {
+            playCyberSound();
+            document.getElementById('authForm').style.display = 'block';
+            document.getElementById('authSwitchText').style.display = 'block';
+            document.getElementById('forgotPasswordSection').style.display = 'none';
+            document.getElementById('authTitle').innerText = "SECURE LOGIN";
+            document.getElementById('authSubtitle').innerText = "Authorize Access to CodexBD";
+            document.getElementById('authErrorMsg').style.display = 'none';
+            document.getElementById('authSuccessMsg').style.display = 'none';
+        }
+
+        window.sendRecoveryOtp = function() {
+            playCyberSound();
+            const email = document.getElementById('recoveryEmail').value.trim();
+            const errorEl = document.getElementById('authErrorMsg');
+            const successEl = document.getElementById('authSuccessMsg');
+
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+
+            if (!email) {
+                errorEl.style.display = 'block';
+                errorEl.innerText = "Please enter your registered email address.";
+                return;
+            }
+
+            recoveryTargetEmail = email;
+            generatedOtpCode = Math.floor(100000 + Math.random() * 900000).toString();
+            showToast("OTP Sent to " + email);
+
+            successEl.style.display = 'block';
+            successEl.innerHTML = `OTP sent successfully!<br><b>[Test OTP Code: ${generatedOtpCode}]</b>`;
+
+            document.getElementById('step1EmailContainer').style.display = 'none';
+            document.getElementById('step2OtpContainer').style.display = 'block';
+            document.getElementById('otpInstructionText').innerText = `OTP sent to: ${email}. Please enter it below.`;
+        }
+
+        window.verifyAndResetPassword = function() {
+            playCyberSound();
+            const userOtp = document.getElementById('enteredOtp').value.trim();
+            const newPassword = document.getElementById('newResetPassword').value;
+            const errorEl = document.getElementById('authErrorMsg');
+            const successEl = document.getElementById('authSuccessMsg');
+
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+
+            if (userOtp !== generatedOtpCode) {
+                errorEl.style.display = 'block';
+                errorEl.innerText = "Invalid OTP code! Please check your email.";
+                return;
+            }
+
+            if (!newPassword || newPassword.length < 6) {
+                errorEl.style.display = 'block';
+                errorEl.innerText = "Password must be at least 6 characters long.";
+                return;
+            }
+
+            successEl.style.display = 'block';
+            successEl.innerText = "Password reset successfully! You can now login.";
+            showToast("Password updated successfully!");
+
+            setTimeout(() => {
+                backToLoginFromForgot();
+                document.getElementById('authEmail').value = recoveryTargetEmail;
+            }, 1500);
         }
 
         window.toggleAuthMode = function() {
+            playCyberSound();
             isSignUpMode = !isSignUpMode;
             document.getElementById('authTitle').innerText = isSignUpMode ? "SECURE SIGN UP" : "SECURE LOGIN";
             document.getElementById('authSubtitle').innerText = isSignUpMode ? "Create a new user account" : "Authorize Access to CodexBD";
@@ -1247,16 +1744,24 @@
             document.getElementById('authBtnIcon').className = isSignUpMode ? "fa-solid fa-user-plus" : "fa-solid fa-right-to-bracket";
             document.getElementById('signUpExtraFields').style.display = isSignUpMode ? "block" : "none";
             document.getElementById('forgotPasswordContainer').style.display = isSignUpMode ? "none" : "block";
+            document.getElementById('authFullName').required = isSignUpMode;
+            document.getElementById('authUsername').required = isSignUpMode;
+            document.getElementById('authDob').required = isSignUpMode;
+            document.getElementById('authGender').required = isSignUpMode;
             document.getElementById('authSwitchText').innerHTML = isSignUpMode ? 
                 'Already have an ID? <span onclick="toggleAuthMode()">Login System</span>' : 
                 'New user? <span onclick="toggleAuthMode()">Create Account</span>';
+            document.getElementById('authErrorMsg').style.display = 'none';
+            document.getElementById('authSuccessMsg').style.display = 'none';
         }
 
         window.handleAuthSubmit = async function(event) {
             event.preventDefault();
+            playCyberSound();
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
             const errorEl = document.getElementById('authErrorMsg');
+
             errorEl.style.display = 'none';
 
             try {
@@ -1269,12 +1774,14 @@
                     await createUserWithEmailAndPassword(auth, email, password);
                     localStorage.setItem('codexbd_user_name_' + email, fullName);
                     localStorage.setItem('codexbd_user_username_' + email, username);
+                    localStorage.setItem('codexbd_user_dob_' + email, dob);
+                    localStorage.setItem('codexbd_user_gender_' + email, gender);
                     
-                    showToast("Account created successfully!");
+                    showToast("Your account has been created successfully!");
                     setTimeout(() => { toggleAuthMode(); }, 1200);
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
-                    showToast("Login Successful!");
+                    showToast("Login Successful! Access Granted.");
                 }
             } catch (error) {
                 errorEl.style.display = 'block';
@@ -1283,11 +1790,75 @@
         }
 
         window.handleLogout = function() {
+            playCyberSound();
             signOut(auth).then(() => {
                 document.getElementById('mainAppContainer').style.display = 'none';
                 document.getElementById('auth-screen').style.display = 'flex';
                 showToast("Logged out successfully.");
             });
+        }
+
+        window.toggleProfileEditMode = function() {
+            playCyberSound();
+            isProfileEditMode = !isProfileEditMode;
+            const nameInput = document.getElementById('profileNameDisplay');
+            const bioInput = document.getElementById('profileCustomBio');
+            const saveBtn = document.getElementById('profileSaveBtn');
+            const editBtnText = document.getElementById('profileEditBtnText');
+            const cameraBadge = document.getElementById('profileCameraBadge');
+
+            if (isProfileEditMode) {
+                nameInput.removeAttribute('readonly');
+                nameInput.style.borderColor = 'var(--accent-cyan)';
+                nameInput.style.background = 'rgba(0,0,0,0.3)';
+
+                bioInput.removeAttribute('readonly');
+                bioInput.style.borderColor = 'var(--accent-cyan)';
+                bioInput.style.background = 'rgba(0,0,0,0.3)';
+
+                saveBtn.style.display = 'block';
+                editBtnText.innerText = "Cancel";
+                cameraBadge.style.display = 'flex';
+            } else {
+                nameInput.setAttribute('readonly', true);
+                nameInput.style.borderColor = 'var(--glass-border)';
+                nameInput.style.background = 'rgba(0,0,0,0.5)';
+
+                bioInput.setAttribute('readonly', true);
+                bioInput.style.borderColor = 'var(--glass-border)';
+                bioInput.style.background = 'rgba(0,0,0,0.5)';
+
+                saveBtn.style.display = 'none';
+                editBtnText.innerText = "Edit";
+                cameraBadge.style.display = 'none';
+            }
+        }
+
+        window.handleAvatarSelect = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                tempAvatarUrl = e.target.result;
+                document.getElementById('profileAvatarImg').src = tempAvatarUrl;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        window.saveUserProfile = function() {
+            playCyberSound();
+            const newName = document.getElementById('profileNameDisplay').value;
+            const bio = document.getElementById('profileCustomBio').value;
+
+            localStorage.setItem('codexbd_user_name_' + currentUserEmail, newName);
+            localStorage.setItem('codexbd_user_bio_' + currentUserEmail, bio);
+            if(tempAvatarUrl) {
+                localStorage.setItem('codexbd_user_avatar_' + currentUserEmail, tempAvatarUrl);
+            }
+
+            showToast("Profile updated successfully!");
+            toggleProfileEditMode();
+            closeModal('profileModal');
         }
 
         function fetchFirebaseFiles() {
@@ -1302,11 +1873,10 @@
                             window.filesData.push({
                                 id: key,
                                 title: item.title || "Untitled",
-                                description: item.description || "No description provided.",
+                                description: item.description || "",
                                 category: item.category || "code",
                                 format: (item.format || "SW").toUpperCase(),
                                 fileSize: item.fileSize || "2.4 MB",
-                                duration: item.duration || "N/A",
                                 uploadDate: item.uploadDate || new Date().toISOString().split('T')[0],
                                 fileUrl: item.fileUrl || "#",
                                 uploaderEmail: item.uploaderEmail || "",
@@ -1318,126 +1888,740 @@
                     });
                 }
                 window.filesData.reverse();
-                renderFiles();
+                
+                if (typeof window.renderFiles === 'function') {
+                    window.renderFiles();
+                }
+
+            }, (error) => {
+                showToast("Data sync error: " + error.message);
             });
         }
 
-        // থ্রি-ডট মেনুতে ফাইল ইনফো দেখার ফাংশন
-        window.openFileInfoModal = function(id, event) {
-            event.stopPropagation();
+        window.handleUploadSubmit = function(event) {
+            event.preventDefault();
+            const editKey = document.getElementById('editPostKey').value;
+            const title = document.getElementById('fileTitle').value;
+            const description = document.getElementById('fileDescInput').value;
+            const category = document.getElementById('fileCategory').value;
+            const formatExt = (document.getElementById('fileFormatExt').value || 'SW').toUpperCase();
+            const fileSize = document.getElementById('fileSizeVal').value || '2.4 MB';
+
+            closeModal('uploadModal');
+            showToast("Uploading directly to vault...");
+
+            if (editKey) {
+                const postRef = ref(db, editKey);
+                update(postRef, {
+                    title: title,
+                    description: description,
+                    category: category,
+                    format: formatExt
+                }).then(() => {
+                    showToast("Post updated successfully!");
+                    document.getElementById('uploadForm').reset();
+                    document.getElementById('editPostKey').value = "";
+                }).catch((err) => {
+                    showToast("Error updating post: " + err.message);
+                });
+            } else {
+                const filesRef = ref(db, '/');
+                const newFileRef = push(filesRef);
+                const fileUrl = window.tempSelectedFileUrl || '#';
+
+                set(newFileRef, {
+                    title: title,
+                    description: description,
+                    category: category,
+                    format: formatExt,
+                    fileSize: fileSize,
+                    uploadDate: new Date().toISOString().split('T')[0],
+                    fileUrl: fileUrl,
+                    uploaderEmail: currentUserEmail,
+                    likes: 0,
+                    likedUsers: {},
+                    comments: []
+                }).then(() => {
+                    showToast("File uploaded & synced successfully!");
+                    document.getElementById('uploadForm').reset();
+                }).catch((err) => {
+                    showToast("Upload failed: " + err.message);
+                });
+            }
+        }
+
+        window.openEditModal = function(id) {
+            playCyberSound();
             const file = window.filesData.find(x => x.id === id);
             if (!file) return;
 
-            const box = document.getElementById('fileInfoContentBox');
-            box.innerHTML = `
-                <div><b style="color: var(--accent-cyan);">Title:</b> ${file.title}</div>
-                <div><b style="color: var(--accent-cyan);">Format:</b> .${file.format}</div>
-                <div><b style="color: var(--accent-cyan);">File Size:</b> ${file.fileSize}</div>
-                <div><b style="color: var(--accent-cyan);">Duration:</b> ${file.duration || 'N/A'}</div>
-                <div><b style="color: var(--accent-cyan);">Upload Date:</b> ${file.uploadDate}</div>
-                <div><b style="color: var(--accent-cyan);">Description:</b><br><span style="color: var(--text-secondary);">${file.description}</span></div>
-            `;
-            openModal('fileInfoModal');
-            document.querySelectorAll('.card-dropdown-menu').forEach(el => el.classList.remove('open'));
+            document.getElementById('editPostKey').value = file.id;
+            document.getElementById('fileTitle').value = file.title;
+            document.getElementById('fileDescInput').value = file.description;
+            document.getElementById('fileCategory').value = file.category;
+            document.getElementById('fileFormatExt').value = file.format;
+            document.getElementById('uploadModalTitle').innerText = "Edit Post / File";
+            document.getElementById('uploadBtnText').innerText = "Update Post";
+            document.getElementById('fileNameDisplay').innerText = file.title + "." + file.format;
+
+            openModal('uploadModal');
+        }
+
+        window.openUploadModalForNew = function() {
+            playCyberSound();
+            document.getElementById('uploadForm').reset();
+            document.getElementById('editPostKey').value = "";
+            document.getElementById('uploadModalTitle').innerText = "Secure File Upload";
+            document.getElementById('uploadBtnText').innerText = "Upload Now";
+            document.getElementById('fileNameDisplay').innerText = "Click to browse file";
+            document.getElementById('scanStatusBadge').style.display = 'none';
+            window.tempSelectedFileUrl = "#";
+            window.tempFileSizeStr = "2.4 MB";
+            openModal('uploadModal');
+        }
+
+        window.toggleLike = function(id) {
+            const file = window.filesData.find(x => x.id === id);
+            if (!file || !currentUserEmail) return;
+
+            const likedUsers = file.likedUsers || {};
+            const safeUserKey = currentUserEmail.replace(/[.#$\/\[\]]/g, "_");
+            let likes = file.likes || 0;
+
+            if (likedUsers[safeUserKey]) {
+                likes--;
+                delete likedUsers[safeUserKey];
+                showToast("Unliked.");
+            } else {
+                likes++;
+                likedUsers[safeUserKey] = true;
+                showToast("Liked!");
+            }
+
+            const postRef = ref(db, id);
+            update(postRef, {
+                likes: likes,
+                likedUsers: likedUsers
+            });
+        }
+
+        window.addComment = function(id) {
+            const inputEl = document.getElementById(`comment-input-${id}`);
+            const commentText = inputEl.value.trim();
+            if (!commentText) return;
+
+            const file = window.filesData.find(x => x.id === id);
+            if (!file) return;
+
+            const comments = file.comments || [];
+            const userName = localStorage.getItem('codexbd_user_name_' + currentUserEmail) || currentUserEmail.split('@')[0];
+            comments.push(`${userName}: ${commentText}`);
+
+            const postRef = ref(db, id);
+            update(postRef, {
+                comments: comments
+            }).then(() => {
+                inputEl.value = '';
+                showToast("Comment posted!");
+                setTimeout(() => {
+                    const dropdown = document.getElementById(`comment-dropdown-${id}`);
+                    if(dropdown) dropdown.classList.add('open');
+                }, 50);
+            });
         }
 
         window.toggleCardMenu = function(id, event) {
             event.stopPropagation();
+            playCyberSound();
+            
             document.querySelectorAll('.card-dropdown-menu').forEach(el => {
                 if (el.id !== `card-menu-${id}`) el.classList.remove('open');
             });
+
             const menu = document.getElementById(`card-menu-${id}`);
-            if (menu) menu.classList.toggle('open');
+            if (menu) {
+                menu.classList.toggle('open');
+            }
         }
 
         document.addEventListener('click', function() {
             document.querySelectorAll('.card-dropdown-menu').forEach(el => el.classList.remove('open'));
         });
 
+        window.sharePost = function(title, fileUrl, event) {
+            event.stopPropagation();
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: `Check out ${title} on CodexBD Store!`,
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Link copied to clipboard!");
+            }
+        }
+
         window.toggleCardFlip = function(cardWrapper) {
-            cardWrapper.classList.toggle('flipped');
-        }
-
-        window.renderFiles = function() {
-            const container = document.getElementById('fileSectionsContainer');
-            if (!container) return;
-
-            container.innerHTML = '';
-            const stackContainer = document.createElement('div');
-            stackContainer.className = 'all-files-stack';
-
-            window.filesData.forEach(file => {
-                const cardWrapper = document.createElement('div');
-                cardWrapper.className = 'file-card-wrapper';
-                cardWrapper.onclick = function(e) {
-                    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) return;
-                    window.toggleCardFlip(this);
-                };
-
-                cardWrapper.innerHTML = `
-                    <div class="file-card-inner">
-                        <div class="file-card-front">
-                            <div class="file-preview">
-                                <i class="fa-solid fa-file-code file-icon-large"></i>
-                                <button class="card-menu-btn" onclick="toggleCardMenu('${file.id}', event)">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <div class="card-dropdown-menu" id="card-menu-${file.id}">
-                                    <button class="dropdown-item" onclick="openFileInfoModal('${file.id}', event)">
-                                        <i class="fa-solid fa-circle-info"></i> File Info
-                                    </button>
-                                    <button class="dropdown-item" onclick="sharePost('${file.title}', event)">
-                                        <i class="fa-solid fa-share-nodes"></i> Share
-                                    </button>
-                                    <a href="${file.fileUrl}" download="${file.title}.${file.format.toLowerCase()}" class="dropdown-item">
-                                        <i class="fa-solid fa-download"></i> Download
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="file-details">
-                                <div class="file-title">${file.title}</div>
-                                <div class="file-meta">
-                                    <span style="color: var(--accent-cyan); font-weight: bold;">.${file.format} (${file.fileSize})</span>
-                                    <span>${file.uploadDate}</span>
-                                </div>
-                                <div class="file-actions">
-                                    <button class="action-btn" onclick="toggleLike('${file.id}')">
-                                        <i class="fa-solid fa-heart"></i> <span>${file.likes || 0}</span>
-                                    </button>
-                                    <span style="font-size: 0.75rem; color: var(--text-secondary); font-family: 'Share Tech Mono', monospace;">Tap card for desc</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="file-card-back">
-                            <div>
-                                <div class="back-title"><i class="fa-solid fa-circle-info"></i> DESCRIPTION</div>
-                                <div class="back-desc">${file.description}</div>
-                            </div>
-                            <div style="text-align: center; font-size: 0.78rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
-                                Tap card to flip back ⟲
-                            </div>
-                        </div>
-                    </div>
-                `;
-                stackContainer.appendChild(cardWrapper);
+            playCyberSound();
+            const isFlipped = cardWrapper.classList.contains('flipped');
+            
+            document.querySelectorAll('.file-card-wrapper').forEach(el => {
+                el.classList.remove('flipped');
+                const descEl = el.querySelector('.back-desc');
+                if(descEl && descEl.typingInterval) clearInterval(descEl.typingInterval);
             });
-            container.appendChild(stackContainer);
+
+            if (!isFlipped) {
+                cardWrapper.classList.add('flipped');
+                const descEl = cardWrapper.querySelector('.back-desc');
+                const fullText = cardWrapper.getAttribute('data-desc') || 'No description provided.';
+                
+                if (descEl) {
+                    descEl.innerHTML = '';
+                    let i = 0;
+                    if(descEl.typingInterval) clearInterval(descEl.typingInterval);
+                    
+                    descEl.typingInterval = setInterval(() => {
+                        if (i < fullText.length) {
+                            descEl.innerHTML += fullText.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(descEl.typingInterval);
+                        }
+                    }, 20);
+                }
+            }
         }
 
-        window.openModal = function(id) { document.getElementById(id).classList.add('active'); }
-        window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
+        window.updateCoverFlow = function(container) {
+            if (!container) return;
+            const wrappers = container.querySelectorAll('.file-card-wrapper');
+            const containerRect = container.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+
+            wrappers.forEach(wrapper => {
+                const rect = wrapper.getBoundingClientRect();
+                const cardCenter = rect.left + rect.width / 2;
+                const distance = cardCenter - containerCenter;
+                const normalized = Math.max(-1, Math.min(1, distance / (containerRect.width / 2)));
+                
+                const rotateY = normalized * -35;
+                const translateZ = Math.abs(normalized) * -60;
+                const scale = 1 - Math.abs(normalized) * 0.12;
+
+                wrapper.style.transform = `perspective(1000px) translateX(${normalized * 15}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+                wrapper.style.zIndex = Math.round(100 - Math.abs(normalized) * 50);
+                wrapper.style.opacity = 1 - Math.abs(normalized) * 0.35;
+            });
+        };
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUserEmail = user.email;
+                currentUserId = user.uid;
+                window.currentUserEmailGlobal = user.email;
+
+                const savedName = localStorage.getItem('codexbd_user_name_' + currentUserEmail) || "Khokon Talukdar";
+                const savedUsername = localStorage.getItem('codexbd_user_username_' + currentUserEmail) || currentUserEmail.split('@')[0];
+                const savedDob = localStorage.getItem('codexbd_user_dob_' + currentUserEmail) || "2000-08-23";
+                const savedGender = localStorage.getItem('codexbd_user_gender_' + currentUserEmail) || "Male";
+                const savedBio = localStorage.getItem('codexbd_user_bio_' + currentUserEmail) || "Active Vault Member";
+                const savedAvatar = localStorage.getItem('codexbd_user_avatar_' + currentUserEmail) || defaultAvatarSvg;
+
+                document.getElementById('profileNameDisplay').value = savedName;
+                document.getElementById('profileUsernameDisplay').value = "@" + savedUsername;
+                document.getElementById('profileEmailDisplay').value = currentUserEmail;
+                document.getElementById('profileDobDisplay').value = savedDob;
+                document.getElementById('profileGenderDisplay').value = savedGender;
+                document.getElementById('profileCustomBio').value = savedBio;
+                
+                const avatarElement = document.getElementById('profileAvatarImg');
+                avatarElement.src = savedAvatar;
+                avatarElement.onerror = function() {
+                    this.src = defaultAvatarSvg;
+                };
+
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('mainAppContainer').style.display = 'block';
+                
                 fetchFirebaseFiles();
             } else {
+                window.currentUserEmailGlobal = "";
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('mainAppContainer').style.display = 'none';
             }
         });
+    </script>
+
+    <script>
+        let currentFormatFilter = 'all';
+
+        const introTitleEl = document.getElementById('introTitle');
+        const targetText = "CODEXBD";
+        const binaryCharset = "0101101010110100101_.-";
+        let introIteration = 0;
+
+        const introInterval = setInterval(() => {
+            if (!introTitleEl) return;
+            introTitleEl.innerText = targetText
+                .split("")
+                .map((letter, index) => {
+                    if (index < introIteration) {
+                        return targetText[index];
+                    }
+                    return binaryCharset[Math.floor(Math.random() * binaryCharset.length)];
+                })
+                .join("");
+
+            if (introIteration >= targetText.length) {
+                clearInterval(introInterval);
+                setTimeout(() => {
+                    const intro = document.getElementById('intro-screen');
+                    if (intro) {
+                        intro.style.opacity = '0';
+                        intro.style.visibility = 'hidden';
+                        try { speakWelcomeVoice(); } catch(e){}
+                    }
+                }, 600);
+            }
+            introIteration += 1 / 4; 
+        }, 100);
+
+        const canvas = document.getElementById('intro-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            if (!canvas) return;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.radius = Math.random() * 1.8 + 0.8;
+                this.color = Math.random() > 0.3 ? '#00f3ff' : '#b000ff';
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                if (!ctx) return;
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 8; ctx.shadowColor = this.color;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+        function animateIntroParticles() {
+            if (!ctx || !canvas) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateIntroParticles);
+        }
+        animateIntroParticles();
+
+        document.addEventListener('click', function (e) {
+            const target = e.target.closest('.ripple-target');
+            if (!target) return;
+            const rect = target.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple-effect';
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            target.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 400);
+        });
+
+        window.preventOutsideClose = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.stopPropagation();
+            }
+        }
+
+        window.toggleCustomDropdown = function() {
+            document.getElementById('customOptions').classList.toggle('open');
+        }
+
+        window.selectCategory = function(cat, fmt, text, icon) {
+            document.getElementById('fileCategory').value = cat;
+            document.getElementById('fileFormatExt').value = fmt;
+            document.getElementById('selectedCategoryText').innerHTML = `<i class="fa-solid ${icon}"></i> ${text}`;
+            document.getElementById('customOptions').classList.remove('open');
+        }
+
+        window.openPolicyModal = function() {
+            openModal('policyModal');
+            const target = document.getElementById('typingPolicyTarget');
+            const cursor = document.getElementById('typingCursor');
+            const scrollBox = document.getElementById('policyScrollContainer');
+            
+            target.innerHTML = '';
+            cursor.style.display = 'inline-block';
+            
+            const policyText = "[INFO]: CODEXBD COMPREHENSIVE STORE POLICY & GUIDELINES\n\n1. Free Platform & Access: CodexBD Store provides a secure cloud repository for uploading, sharing, and managing personal digital assets completely free of charge.\n\n2. Enterprise-Grade Security: All user credentials and data transmissions are secured using advanced quantum-resistant protocols and cryptographic encryption standards.\n\n3. Automated Threat Detection & Safety: Every uploaded file undergoes rigorous real-time malware analysis. Executable files and dangerous scripts are automatically restricted to maintain absolute platform integrity.\n\n4. User Conduct & Responsibility: Users must ensure that uploaded content adheres to intellectual property guidelines and does not distribute malicious software.";
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < policyText.length) {
+                    target.innerHTML += (policyText.charAt(i) === '\n') ? '<br>' : policyText.charAt(i);
+                    i++;
+                    scrollBox.scrollTop = scrollBox.scrollHeight;
+                    setTimeout(typeWriter, 12);
+                } else {
+                    cursor.style.display = 'none';
+                    scrollBox.scrollTop = scrollBox.scrollHeight;
+                }
+            }
+            typeWriter();
+        }
+
+        window.handleFormatClick = function(format, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active'); 
+            currentFormatFilter = format;
+            renderFiles();
+        }
+
+        window.handleFileSelect = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const ext = file.name.split('.').pop().toLowerCase();
+            const badge = document.getElementById('scanStatusBadge');
+            const submitBtn = document.getElementById('uploadSubmitBtn');
+
+            let calculatedSize = (file.size / (1024 * 1024)).toFixed(1) + " MB";
+            if (file.size < 1024 * 1024) {
+                calculatedSize = (file.size / 1024).toFixed(1) + " KB";
+            }
+            document.getElementById('fileSizeVal').value = calculatedSize;
+
+            const BLOCKED_EXTENSIONS = ['exe', 'bat', 'vbs', 'cmd', 'msi', 'scr', 'ps1', 'jar'];
+            if (BLOCKED_EXTENSIONS.includes(ext)) {
+                window.isFileSafeToUpload = false;
+                badge.className = 'scan-status-badge blocked'; badge.innerText = 'THREAT BLOCKED!'; submitBtn.disabled = true;
+            } else {
+                window.isFileSafeToUpload = true;
+                badge.className = 'scan-status-badge safe'; badge.innerText = 'SCAN PASSED: Safe';
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    window.tempSelectedFileUrl = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                document.getElementById('fileNameDisplay').innerText = file.name; 
+                submitBtn.disabled = false;
+            }
+        }
+
+        window.renderFiles = function() {
+            const container = document.getElementById('fileSectionsContainer');
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            if (!container) return;
+            
+            if (!window.filesData || window.filesData.length === 0) {
+                container.innerHTML = `
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton-card">
+                            <div class="skeleton-preview shimmer-line"></div>
+                            <div class="skeleton-body">
+                                <div class="skeleton-title shimmer-line"></div>
+                                <div class="skeleton-meta">
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                </div>
+                                <div class="skeleton-actions">
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skeleton-card">
+                            <div class="skeleton-preview shimmer-line"></div>
+                            <div class="skeleton-body">
+                                <div class="skeleton-title shimmer-line"></div>
+                                <div class="skeleton-meta">
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                    <div class="skeleton-meta-item shimmer-line"></div>
+                                </div>
+                                <div class="skeleton-actions">
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                    <div class="skeleton-btn shimmer-line"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            const filteredFiles = (window.filesData || []).filter(file => {
+                const matchesFormat = (currentFormatFilter === 'all') || (file.format && file.format.toUpperCase() === currentFormatFilter.toUpperCase());
+                const matchesSearch = file.title && file.title.toLowerCase().includes(searchQuery);
+                return matchesFormat && matchesSearch;
+            });
+
+            container.innerHTML = '';
+
+            if (filteredFiles.length === 0) {
+                container.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--text-secondary); font-family: 'Share Tech Mono', monospace;">NO FILES FOUND IN THIS CATEGORY</div>`;
+                return;
+            }
+
+            function getFileIcon(category, format) {
+                if (category === 'image') return 'fa-file-image';
+                if (category === 'video') return 'fa-file-video';
+                if (category === 'audio') return 'fa-file-audio';
+                if (category === 'document') return 'fa-file-pdf';
+                if (format === 'APK') return 'fa-android';
+                if (format === 'ZIP' || format === 'RAR') return 'fa-file-zipper';
+                return 'fa-file-code';
+            }
+
+            const activeUser = window.currentUserEmailGlobal || "";
+
+            if (currentFormatFilter === 'all') {
+                const stackContainer = document.createElement('div');
+                stackContainer.className = 'all-files-stack';
+
+                filteredFiles.forEach(file => {
+                    const iconClass = getFileIcon(file.category, file.format);
+                    const cardWrapper = document.createElement('div');
+                    cardWrapper.className = 'file-card-wrapper';
+                    cardWrapper.setAttribute('data-desc', file.description || 'No description provided.');
+                    cardWrapper.onclick = function(e) {
+                        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) return;
+                        window.toggleCardFlip(this);
+                    };
+                    
+                    let commentsHtml = '';
+                    (file.comments || []).forEach(c => {
+                        commentsHtml += `<div class="comment-item">${c}</div>`;
+                    });
+
+                    const safeUserKey = activeUser ? activeUser.replace(/[.#$\/\[\]]/g, "_") : "";
+                    const isLikedByMe = file.likedUsers && file.likedUsers[safeUserKey];
+                    const likeCount = file.likes || 0;
+
+                    let editDropdownItem = '';
+                    if (activeUser && file.uploaderEmail === activeUser) {
+                        editDropdownItem = `
+                            <button class="dropdown-item" onclick="openEditModal('${file.id}')">
+                                <i class="fa-solid fa-pen"></i> Edit
+                            </button>
+                        `;
+                    }
+
+                    cardWrapper.innerHTML = `
+                        <div class="file-card-inner">
+                            <div class="file-card-front">
+                                <div class="file-preview">
+                                    <i class="fa-solid ${iconClass} file-icon-large"></i>
+                                    
+                                    <button class="card-menu-btn ripple-target" onclick="toggleCardMenu('${file.id}', event)">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+
+                                    <div class="card-dropdown-menu" id="card-menu-${file.id}">
+                                        ${editDropdownItem}
+                                        <button class="dropdown-item" onclick="sharePost('${file.title}', '${file.fileUrl}', event)">
+                                            <i class="fa-solid fa-share-nodes"></i> Share
+                                        </button>
+                                        <a href="${file.fileUrl}" download="${file.title}.${(file.format || '').toLowerCase()}" class="dropdown-item">
+                                            <i class="fa-solid fa-download"></i> Download
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="file-details">
+                                    <div class="file-title">${file.title}</div>
+                                    <div class="file-meta">
+                                        <span style="color: var(--accent-cyan); font-weight: bold;">.${file.format} (${file.fileSize || '2.4 MB'})</span>
+                                        <span>${file.uploadDate}</span>
+                                    </div>
+                                    <div class="file-actions">
+                                        <button class="action-btn ${isLikedByMe ? 'liked' : ''}" onclick="toggleLike('${file.id}')">
+                                            <i class="fa-solid fa-heart"></i> <span id="like-count-${file.id}">${likeCount}</span>
+                                        </button>
+                                        <a href="${file.fileUrl}" download="${file.title}.${(file.format || '').toLowerCase()}" class="download-btn">
+                                            <i class="fa-solid fa-download"></i> Download
+                                        </a>
+                                    </div>
+                                    <div class="comments-section">
+                                        <button class="comment-toggle-btn ripple-target" onclick="toggleComments('${file.id}')">
+                                            <i class="fa-solid fa-comments"></i> Comment (${(file.comments || []).length})
+                                        </button>
+                                        <div class="comments-dropdown-wrapper" id="comment-dropdown-${file.id}">
+                                            <div class="comments-list" id="comments-list-${file.id}">
+                                                ${commentsHtml || '<div style="color: var(--text-secondary); font-size: 0.75rem;">No comments yet.</div>'}
+                                            </div>
+                                            <div class="comment-input-box">
+                                                <input type="text" class="comment-input" id="comment-input-${file.id}" placeholder="Write a comment...">
+                                                <button class="comment-submit-btn" onclick="addComment('${file.id}')">Post</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-card-back">
+                                <div>
+                                    <div class="back-title"><i class="fa-solid fa-circle-info"></i> DESCRIPTION</div>
+                                    <div class="back-desc"></div>
+                                </div>
+                                <div style="text-align: center; font-size: 0.78rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
+                                    Click card to flip back ⟲
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    stackContainer.appendChild(cardWrapper);
+                });
+                container.appendChild(stackContainer);
+
+            } else {
+                const groupedFiles = {};
+                filteredFiles.forEach(file => {
+                    const fmt = (file.format || 'OTHER').toUpperCase();
+                    if (!groupedFiles[fmt]) groupedFiles[fmt] = [];
+                    groupedFiles[fmt].push(file);
+                });
+
+                Object.keys(groupedFiles).forEach(format => {
+                    const filesList = groupedFiles[format];
+                    
+                    const sectionEl = document.createElement('div');
+                    sectionEl.className = 'category-section';
+
+                    const titleEl = document.createElement('div');
+                    titleEl.className = 'category-title';
+                    titleEl.innerHTML = `<i class="fa-solid fa-folder-open"></i> .${format} FILES (${filesList.length})_`;
+                    sectionEl.appendChild(titleEl);
+
+                    const scrollRow = document.createElement('div');
+                    scrollRow.className = 'category-scroll-row';
+                    scrollRow.onscroll = function() { window.updateCoverFlow(this); };
+
+                    filesList.forEach(file => {
+                        const iconClass = getFileIcon(file.category, file.format);
+                        const cardWrapper = document.createElement('div');
+                        cardWrapper.className = 'file-card-wrapper';
+                        cardWrapper.setAttribute('data-desc', file.description || 'No description provided.');
+                        cardWrapper.onclick = function(e) {
+                            if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) return;
+                            window.toggleCardFlip(this);
+                        };
+                        
+                        let commentsHtml = '';
+                        (file.comments || []).forEach(c => {
+                            commentsHtml += `<div class="comment-item">${c}</div>`;
+                        });
+
+                        const safeUserKey = activeUser ? activeUser.replace(/[.#$\/\[\]]/g, "_") : "";
+                        const isLikedByMe = file.likedUsers && file.likedUsers[safeUserKey];
+                        const likeCount = file.likes || 0;
+
+                        let editDropdownItem = '';
+                        if (activeUser && file.uploaderEmail === activeUser) {
+                            editDropdownItem = `
+                                <button class="dropdown-item" onclick="openEditModal('${file.id}')">
+                                    <i class="fa-solid fa-pen"></i> Edit
+                                </button>
+                            `;
+                        }
+
+                        cardWrapper.innerHTML = `
+                            <div class="file-card-inner">
+                                <div class="file-card-front">
+                                    <div class="file-preview">
+                                        <i class="fa-solid ${iconClass} file-icon-large"></i>
+                                        
+                                        <button class="card-menu-btn ripple-target" onclick="toggleCardMenu('${file.id}', event)">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </button>
+
+                                        <div class="card-dropdown-menu" id="card-menu-${file.id}">
+                                            ${editDropdownItem}
+                                            <button class="dropdown-item" onclick="sharePost('${file.title}', '${file.fileUrl}', event)">
+                                                <i class="fa-solid fa-share-nodes"></i> Share
+                                            </button>
+                                            <a href="${file.fileUrl}" download="${file.title}.${(file.format || '').toLowerCase()}" class="dropdown-item">
+                                                <i class="fa-solid fa-download"></i> Download
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="file-details">
+                                        <div class="file-title">${file.title}</div>
+                                        <div class="file-meta">
+                                            <span style="color: var(--accent-cyan); font-weight: bold;">.${file.format} (${file.fileSize || '2.4 MB'})</span>
+                                            <span>${file.uploadDate}</span>
+                                        </div>
+                                        <div class="file-actions">
+                                            <button class="action-btn ${isLikedByMe ? 'liked' : ''}" onclick="toggleLike('${file.id}')">
+                                                <i class="fa-solid fa-heart"></i> <span id="like-count-${file.id}">${likeCount}</span>
+                                            </button>
+                                            <a href="${file.fileUrl}" download="${file.title}.${(file.format || '').toLowerCase()}" class="download-btn">
+                                                <i class="fa-solid fa-download"></i> Download
+                                            </a>
+                                        </div>
+                                        <div class="comments-section">
+                                            <button class="comment-toggle-btn ripple-target" onclick="toggleComments('${file.id}')">
+                                                <i class="fa-solid fa-comments"></i> Comment (${(file.comments || []).length})
+                                            </button>
+                                            <div class="comments-dropdown-wrapper" id="comment-dropdown-${file.id}">
+                                                <div class="comments-list" id="comments-list-${file.id}">
+                                                    ${commentsHtml || '<div style="color: var(--text-secondary); font-size: 0.75rem;">No comments yet.</div>'}
+                                                </div>
+                                                <div class="comment-input-box">
+                                                    <input type="text" class="comment-input" id="comment-input-${file.id}" placeholder="Write a comment...">
+                                                    <button class="comment-submit-btn" onclick="addComment('${file.id}')">Post</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="file-card-back">
+                                    <div>
+                                        <div class="back-title"><i class="fa-solid fa-circle-info"></i> DESCRIPTION</div>
+                                        <div class="back-desc"></div>
+                                    </div>
+                                    <div style="text-align: center; font-size: 0.78rem; color: var(--accent-cyan); font-family: 'Share Tech Mono', monospace;">
+                                        Click card to flip back ⟲
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        scrollRow.appendChild(cardWrapper);
+                    });
+
+                    sectionEl.appendChild(scrollRow);
+                    container.appendChild(sectionEl);
+                    setTimeout(() => window.updateCoverFlow(scrollRow), 50);
+                });
+            }
+        }
+
+        window.toggleComments = function(id) {
+            const dropdown = document.getElementById(`comment-dropdown-${id}`);
+            if (dropdown) {
+                dropdown.classList.toggle('open');
+            }
+        }
+
+        window.openModal = function(id) { document.getElementById(id).classList.add('active'); }
+        window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); }
+        window.filterFiles = function() { renderFiles(); }
     </script>
 </body>
     </html>
